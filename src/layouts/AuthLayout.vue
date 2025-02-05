@@ -31,7 +31,7 @@
         <router-link to="/" class="mb-0 mb-lg-12">
           <img
             alt="Logo"
-            :src="getAssetPath('logo.svg')"
+            :src="getAssetPath('logo.webp')"
             class="h-130px h-lg-150px"
           />
         </router-link>
@@ -79,7 +79,7 @@
     >
       <img
         alt="Logo"
-        :src="getAssetPath('logo.svg')"
+        :src="getAssetPath('logo.webp')"
         class="h-130px h-lg-150px"
       />
     </router-link>

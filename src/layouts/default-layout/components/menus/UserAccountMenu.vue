@@ -201,7 +201,7 @@ const countries = {
     flag: getAssetPath("media/flags/Saudi_Arabia.svg"),
     name: t("Arabic"),
   },
-  zh: {
+ /*/ zh: {
     flag: getAssetPath("media/flags/china.svg"),
     name: t("Chinese"),
   },
@@ -232,7 +232,7 @@ const countries = {
   de: {
     flag: getAssetPath("media/flags/germany.svg"),
     name: t("German"),
-  },
+  },*/
 };
 
 const currentLanguage = computed(() => locale.value);

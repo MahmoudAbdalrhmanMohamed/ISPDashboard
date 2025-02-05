@@ -472,26 +472,26 @@ const router = createRouter({
   },
 });
 
-router.beforeEach((to, from, next) => {
-  document.title = `${to.meta.pageTitle} - ${import.meta.env.VITE_APP_NAME}`;
+// router.beforeEach((to, from, next) => {
+//   document.title = `${to.meta.pageTitle} - ${import.meta.env.VITE_APP_NAME}`;
 
-  const token = localStorage.getItem("authToken");
+//   const token = localStorage.getItem("authToken");
 
-  if (token) {
-    // Prevent authenticated users from visiting the sign-in page
-    if (to.name === "sign-in") {
-      next({ name: "dashboard" });
-    } else {
-      next();
-    }
-  } else {
-    // Avoid redirecting to sign-in if already there
-    if (to.name === "sign-in") {
-      next(); // Already on the sign-in page
-    } else {
-      next({ name: "sign-in" }); // Redirect to sign-in for other routes
-    }
-  }
-});
+//   if (token) {
+//     // Prevent authenticated users from visiting the sign-in page
+//     if (to.name === "sign-in") {
+//       next({ name: "dashboard" });
+//     } else {
+//       next();
+//     }
+//   } else {
+//     // Avoid redirecting to sign-in if already there
+//     if (to.name === "sign-in") {
+//       next(); // Already on the sign-in page
+//     } else {
+//       next({ name: "sign-in" }); // Redirect to sign-in for other routes
+//     }
+//   }
+// });
 
 export default router;
