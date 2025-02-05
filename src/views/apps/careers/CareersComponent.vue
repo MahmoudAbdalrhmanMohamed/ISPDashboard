@@ -15,7 +15,7 @@
           v-model="search"
           @input="debouncedSearch"
           class="form-control form-control-solid w-250px ps-15"
-          :placeholder="$t('searchProducts')"
+          :placeholder="$t('searchCareers')"
         />
       </div>
 
@@ -26,14 +26,14 @@
           class="flex justify-content-end flex-wrap gap-2"
           data-kt-customer-table-toolbar="base"
         >
-          <!-- Add Product Button -->
-          <router-link
-            :to="{ name: 'apps-products-add' }"
+          <!-- Add Career Button -->
+          <!-- <router-link
+            :to="{ name: 'apps-careers-add' }"
             class="btn btn-primary"
           >
             <KTIcon icon-name="plus" icon-class="fs-2" />
-            {{ $t("addProduct") }}
-          </router-link>
+            {{ $t("addCareer") }}
+          </router-link> -->
         </div>
         <div
           v-else
@@ -47,7 +47,7 @@
           <button
             type="button"
             class="btn btn-danger"
-            @click="deleteSelectedProducts"
+            @click="deleteSelectedCareers"
           >
             {{ $t("deleteSelected") }}
           </button>
@@ -65,30 +65,33 @@
         :enable-items-per-page-dropdown="false"
         :checkbox-enabled="true"
         checkbox-label="id"
-        ref="productTable"
+        ref="careerTable"
         :totalPages="Number(dataVal)"
         @page-change="fetching"
         :loading="load"
       >
-        <!-- Name Column -->
-        <template v-slot:name="{ row: product }">{{ product.name }}</template>
-        <!-- Description Column -->
-        <template v-slot:description="{ row: product }">{{
-          product.description
+        <!-- First Name Column -->
+        <template v-slot:first_name="{ row: career }">{{
+          career.first_name
         }}</template>
+        <!-- Last Name Column -->
+        <template v-slot:last_name="{ row: career }">{{
+          career.last_name
+        }}</template>
+        <!-- Email Column -->
+        <template v-slot:email="{ row: career }">{{ career.email }}</template>
+        <!-- Phone Number Column -->
+        <template v-slot:phone_number="{ row: career }">{{
+          career.phone_number
+        }}</template>
+        <!-- City Column -->
+        <template v-slot:city="{ row: career }">{{ career.city }}</template>
         <!-- Country Column -->
-        <template v-slot:country="{ row: product }">{{
-          product.country
+        <template v-slot:country="{ row: career }">{{
+          career.country
         }}</template>
-        <!-- Categories Column -->
-        <template v-slot:categories="{ row: product }">
-          <span v-for="(category, index) in product.categories" :key="index">
-            {{ category
-            }}{{ index < product.categories.length - 1 ? ", " : "" }}
-          </span>
-        </template>
         <!-- Actions Column -->
-        <template v-slot:actions="{ row: product }">
+        <template v-slot:actions="{ row: career }">
           <a
             href="#"
             class="btn btn-sm btn-light btn-active-light-primary"
@@ -105,14 +108,14 @@
             <div class="menu-item px-3">
               <router-link
                 class="menu-link px-3 w-full"
-                :to="`/apps/products/updateProduct/${product.id}`"
+                :to="`/apps/careers/user/${career.id}`"
               >
-                {{ $t("edit") }}
+                {{ $t("view") }}
               </router-link>
             </div>
 
             <div class="menu-item px-3">
-              <a @click="deleteProduct(product.id)" class="menu-link px-3">{{
+              <a @click="deleteCareer(career.id)" class="menu-link px-3">{{
                 $t("delete")
               }}</a>
             </div>
@@ -122,6 +125,7 @@
     </div>
   </div>
 </template>
+
 <script setup>
 import { ref, watch, onMounted } from "vue";
 import { Dropdown } from "bootstrap";
@@ -135,17 +139,16 @@ const load = ref(false);
 const selectedIds = ref([]);
 const search = ref("");
 const tableData = ref([]);
-const initProducts = ref([]);
+const initCareers = ref([]);
 const { locale } = useI18n();
 const dataVal = ref();
 
-// Fetch products
+// Fetch careers
 const fetching = async (page = 1) => {
   try {
     load.value = true;
-
     const { data } = await useFetch(
-      `${import.meta.env.VITE_APP_API_URL_MEGATRON}/products?page=${page}`,
+      `${import.meta.env.VITE_APP_API_URL_MEGATRON}/careers?page=${page}`,
       {
         method: "GET",
         headers: {
@@ -155,12 +158,12 @@ const fetching = async (page = 1) => {
       },
     ).json();
     tableData.value = [...data.value.data.data];
-    initProducts.value = [...data.value.data.data];
+    initCareers.value = [...data.value.data.data];
     dataVal.value = data.value.data.meta.total;
     load.value = false;
   } catch (error) {
     load.value = false;
-    console.error("Error fetching data:", error);
+    console.error("Error fetching careers:", error);
   }
 };
 
@@ -175,11 +178,17 @@ watch(
 
 // Table header configuration
 const tableHeader = ref([
-  { columnName: "name", columnLabel: "name", sortEnabled: true },
-  { columnName: "description", columnLabel: "description", sortEnabled: true },
-  { columnName: "country", columnLabel: "country", sortEnabled: true },
-  { columnName: "categories", columnLabel: "categories", sortEnabled: false },
-  { columnName: "actions", columnLabel: "actions", sortEnabled: false },
+  { columnName: "first_name", columnLabel: "First Name", sortEnabled: true },
+  { columnName: "last_name", columnLabel: "Last Name", sortEnabled: true },
+  { columnName: "email", columnLabel: "Email", sortEnabled: true },
+  {
+    columnName: "phone_number",
+    columnLabel: "Phone Number",
+    sortEnabled: true,
+  },
+  { columnName: "city", columnLabel: "City", sortEnabled: true },
+  { columnName: "country", columnLabel: "Country", sortEnabled: true },
+  { columnName: "actions", columnLabel: "Actions", sortEnabled: false },
 ]);
 
 // Handle item selection
@@ -191,7 +200,7 @@ const onItemSelect = (selectedItems) => {
 const debouncedSearch = debounce(() => {
   if (search.value) {
     const lowerSearch = search.value.toLowerCase();
-    tableData.value = initProducts.value.filter((item) =>
+    tableData.value = initCareers.value.filter((item) =>
       Object.values(item).some(
         (field) =>
           typeof field === "string" &&
@@ -199,7 +208,7 @@ const debouncedSearch = debounce(() => {
       ),
     );
   } else {
-    tableData.value = [...initProducts.value];
+    tableData.value = [...initCareers.value];
   }
 }, 300);
 
@@ -216,8 +225,8 @@ const sort = ({ label, order }) => {
   });
 };
 
-// Delete product
-const deleteProduct = async (id) => {
+// Delete career
+const deleteCareer = async (id) => {
   try {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -231,7 +240,7 @@ const deleteProduct = async (id) => {
 
     if (result.isConfirmed) {
       await useFetch(
-        `${import.meta.env.VITE_APP_API_URL_MEGATRON}/products/${id}`,
+        `${import.meta.env.VITE_APP_API_URL_MEGATRON}/careers/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -240,15 +249,15 @@ const deleteProduct = async (id) => {
         },
       );
       await fetching(1);
-      Swal.fire("Deleted!", "The product has been deleted.", "success");
+      Swal.fire("Deleted!", "The career has been deleted.", "success");
     }
   } catch (error) {
-    console.error("Error deleting product:", error);
+    console.error("Error deleting career:", error);
   }
 };
 
-// Delete selected products
-const deleteSelectedProducts = async () => {
+// Delete selected careers
+const deleteSelectedCareers = async () => {
   try {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -262,7 +271,7 @@ const deleteSelectedProducts = async () => {
 
     if (result.isConfirmed) {
       await useFetch(
-        `${import.meta.env.VITE_APP_API_URL_MEGATRON}/products/delete-selected`,
+        `${import.meta.env.VITE_APP_API_URL_MEGATRON}/careers/delete-selected`,
         {
           method: "POST",
           headers: {
@@ -274,12 +283,12 @@ const deleteSelectedProducts = async () => {
       await fetching(1);
       Swal.fire(
         "Deleted!",
-        "The selected products have been deleted.",
+        "The selected careers have been deleted.",
         "success",
       );
     }
   } catch (error) {
-    console.error("Error deleting selected products:", error);
+    console.error("Error deleting selected careers:", error);
   }
 };
 </script>

@@ -388,6 +388,170 @@ const routes: Array<RouteRecordRaw> = [
           breadcrumbs: ["Apps", "Admins", "Update Password"],
         },
       },
+      {
+        path: "/apps/products/all",
+        name: "apps-products-all",
+        component: () => import("@/views/apps/products/ProductsComponent.vue"),
+        meta: {
+          pageTitle: "products",
+          breadcrumbs: ["Apps", "products"],
+        },
+      },
+      {
+        path: "/apps/products/add",
+        name: "apps-products-add",
+        component: () => import("@/views/apps/products/addProducts.vue"),
+        meta: {
+          pageTitle: "addProduct",
+          breadcrumbs: ["Apps", "products", "addProduct"],
+        },
+      },
+      {
+        path: "/apps/products/update/:product",
+        name: "apps-products-update",
+        component: () => import("@/views/apps/products/updateProducts.vue"),
+        meta: {
+          pageTitle: "updateProduct",
+          breadcrumbs: ["Apps", "products", "updateProduct"],
+        },
+      },
+      {
+        path: "/apps/gallery/all",
+        name: "apps-gallery-all",
+        component: () => import("@/views/apps/gallery/test.vue"),
+        meta: {
+          pageTitle: "gallery",
+          breadcrumbs: ["Apps", "gallery"],
+        },
+      },
+      {
+        path: "/apps/gallery",
+        name: "apps-gallery",
+        component: () => import("@/views/apps/gallery/GalleryComponent.vue"),
+        meta: {
+          pageTitle: "gallery",
+          breadcrumbs: ["Apps", "gallery"],
+        },
+      },
+      {
+        path: "/apps/gallery/add",
+        name: "apps-gallery-add",
+        component: () => import("@/views/apps/gallery/addGallery.vue"),
+        meta: {
+          pageTitle: "gallery",
+          breadcrumbs: ["Apps", "gallery", "add"],
+        },
+      },
+      {
+        path: "/apps/gallery/update/:gallery",
+        name: "apps-gallery-update",
+        component: () => import("@/views/apps/gallery/updateGallery.vue"),
+        meta: {
+          pageTitle: "gallery",
+          breadcrumbs: ["Apps", "gallery", "update"],
+        },
+      },
+      {
+        path: "/apps/paterners",
+        name: "apps-parteners",
+        component: () =>
+          import("@/views/apps/parteners/PaternersComponent.vue"),
+        meta: {
+          pageTitle: "parteners",
+          breadcrumbs: ["Apps", "parteners"],
+        },
+      },
+      {
+        path: "/apps/parteners/add",
+        name: "apps-parteners-add",
+        component: () => import("@/views/apps/parteners/addPaterner.vue"),
+        meta: {
+          pageTitle: "parteners",
+          breadcrumbs: ["Apps", "parteners", "add"],
+        },
+      },
+      {
+        path: "/apps/parteners/update/:parteners",
+        name: "apps-parteners-update",
+        component: () => import("@/views/apps/parteners/updatePaterner.vue"),
+        meta: {
+          pageTitle: "parteners",
+          breadcrumbs: ["Apps", "parteners", "update"],
+        },
+      },
+      {
+        path: "/apps/clinets",
+        name: "apps-clinets",
+        component: () => import("@/views/apps/ourClients/ClientsComponent.vue"),
+        meta: {
+          pageTitle: "clinets",
+          breadcrumbs: ["Apps", "clinets"],
+        },
+      },
+      {
+        path: "/apps/clinets/add",
+        name: "apps-clinets-add",
+        component: () => import("@/views/apps/ourClients/addClient.vue"),
+        meta: {
+          pageTitle: "clinets",
+          breadcrumbs: ["Apps", "clinets", "add"],
+        },
+      },
+      {
+        path: "/apps/clinets/update/:clinets",
+        name: "apps-clinets-update",
+        component: () => import("@/views/apps/ourClients/updateClient.vue"),
+        meta: {
+          pageTitle: "clinets",
+          breadcrumbs: ["Apps", "clinets", "update"],
+        },
+      },
+      {
+        path: "/apps/contacts",
+        name: "apps-contacts",
+        component: () =>
+          import("@/views/apps/contacts/PublishersComponent.vue"),
+        meta: {
+          pageTitle: "contacts",
+          breadcrumbs: ["Apps", "contacts"],
+        },
+      },
+      {
+        path: "/apps/careers",
+        name: "apps-careers",
+        component: () => import("@/views/apps/careers/CareersComponent.vue"),
+        meta: {
+          pageTitle: "careers",
+          breadcrumbs: ["Apps", "careers"],
+        },
+      },
+      {
+        path: "/apps/careers/user/:user",
+        name: "apps-careers/user",
+        component: () => import("@/views/apps/careers/UserComponent.vue"),
+        meta: {
+          pageTitle: "careers",
+          breadcrumbs: ["Apps", "careers", "careerRequets"],
+        },
+      },
+      // {
+      //   path: "/apps/products/add",
+      //   name: "apps-products-add",
+      //   component: () => import("@/views/apps/products/addProducts.vue"),
+      //   meta: {
+      //     pageTitle: "addProduct",
+      //     breadcrumbs: ["Apps", "products", "addProduct"],
+      //   },
+      // },
+      // {
+      //   path: "/apps/products/update/:product",
+      //   name: "apps-products-update",
+      //   component: () => import("@/views/apps/products/updateProducts.vue"),
+      //   meta: {
+      //     pageTitle: "updateProduct",
+      //     breadcrumbs: ["Apps", "products", "updateProduct"],
+      //   },
+      // },
     ],
   },
   {

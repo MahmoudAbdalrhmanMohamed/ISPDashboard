@@ -4,82 +4,82 @@
       class="grid grid-cols-1 sm:grid-cols-2 gap-5 grid-rows-9 sm:grid-rows-5 xl:gap-10 mb-5 xl:mb-10"
     >
       <!-- Card 1 -->
-      <Widget11V2
+      <!-- <Widget11V2
         :usersCount="5424"
         :usersVerifiedCount="2546"
-        :description="$t('allComics')"
+        :description="$t('all')"
         bgColor="#1f6f78"
         className="h-full"
         tanslated="translated"
-      />
+      /> -->
       <!-- Card 2 -->
-      <Widget11
+      <!-- <Widget11
         :usersCount="9565"
         :usersVerifiedCount="7564"
         :description="$t('allChapters')"
         tanslated="translated"
         bgColor="#430f58"
         className="h-full"
-      />
+      /> -->
       <!-- Card 3 -->
-      <Widget1
+      <!-- <Widget1
         :usersCount="565"
         :usersVerifiedCount="dataVal.usersVerifiedCount"
         :description="$t('allTranslators')"
         bgColor="#F1416C"
         :bgImage="getAssetPath('media/patterns/vector-1.png')"
         className="h-full pb-24"
-      />
+      /> -->
       <!-- Card 4 -->
-      <Widget111
+      <!-- <Widget111
         :usersCount="3546855"
         :usersVerifiedCount="dataVal.usersVerifiedCount"
         :description="$t('allUsers')"
         className="h-full pb-24"
-      />
+      /> -->
 
       <!-- Card 5 -->
-      <Widget112
+      <!-- <Widget112
         :usersCount="5424"
         :usersVerifiedCount="2546"
         :description="$t('allComicsInThisMonth')"
         className="h-full"
-      />
+      /> -->
       <!-- Card 6 -->
-      <Widget113
+      <!-- <Widget113
         :usersCount="9565"
         :usersVerifiedCount="7564"
         :description="$t('allChaptersInThisMonth')"
         bgColor="#efd510"
         className="h-full"
-      />
+      /> -->
       <!-- Card 7 -->
-      <Widget114
+      <!-- <Widget114
         :usersCount="565"
         :usersVerifiedCount="dataVal.usersVerifiedCount"
         :description="$t('allWriters')"
         className="h-full pb-24"
-      />
+      /> -->
       <!-- Card 8 -->
-      <Widget115
+      <!-- <Widget115
         :usersCount="3546855"
         :description="$t('allArtis')"
         className="h-full pb-24"
-      />
+      /> -->
       <!-- Card 9 -->
-      <Widget116
+      <!-- <Widget116
         :usersCount="3546855"
         :description="$t('allGeners')"
         bgColor="#6a0e97"
         className="h-full pb-24"
-      />
+      /> -->
     </div>
     <!-- <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
       <div class="w-full">
         <Widget9 :data="dataVal.charts" className="h-lg-100" :height="300" />
       </div>
     </div> -->
-    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+    <!-- <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
       <div class="w-full">
         <WidgetMoney
           :data="dataVal.charts"
@@ -132,7 +132,7 @@
           className="h-md-100"
         />
       </div>
-    </div>
+    </div>-->
   </div>
   <div v-else class="w-full h-screen grid place-items-center">
     <span class="loader"></span>

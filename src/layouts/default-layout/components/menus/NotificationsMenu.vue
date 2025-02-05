@@ -7,7 +7,7 @@
     <!--begin::Heading-->
     <div
       class="d-flex flex-column bgi-no-repeat rounded-top"
-      :style="`background-image: url('${getAssetPath('/smallLogo.svg')}')`"
+      :style="`background-image: url('${getAssetPath('/logo.webp')}')`"
     >
       <!--begin::Title-->
       <h3 class="text-white fw-semibold px-9 mt-10 mb-6">
@@ -69,7 +69,7 @@
                       class="symbol-label bg-light-warning"
                     >
                       <img
-                        :src="getAssetPath('smallLogo.svg')"
+                        :src="getAssetPath('logo.webp')"
                         alt="Unread"
                         class="h-25px w-25px"
                       />

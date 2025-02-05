@@ -76,6 +76,15 @@
         <template v-slot:description="{ row: product }">{{
           product.description
         }}</template>
+        <template v-slot:im="{ row: product }">
+          <img
+            :src="product.image || '/path/to/default-image.jpg'"
+            alt="Product Image"
+            class="product-image"
+            width="50"
+            height="50"
+          />
+        </template>
         <!-- Country Column -->
         <template v-slot:country="{ row: product }">{{
           product.country
@@ -105,7 +114,7 @@
             <div class="menu-item px-3">
               <router-link
                 class="menu-link px-3 w-full"
-                :to="`/apps/products/updateProduct/${product.id}`"
+                :to="`/apps/products/update/${product.id}`"
               >
                 {{ $t("edit") }}
               </router-link>
@@ -176,6 +185,7 @@ watch(
 // Table header configuration
 const tableHeader = ref([
   { columnName: "name", columnLabel: "name", sortEnabled: true },
+  { columnName: "image", columnLabel: "im", sortEnabled: false },
   { columnName: "description", columnLabel: "description", sortEnabled: true },
   { columnName: "country", columnLabel: "country", sortEnabled: true },
   { columnName: "categories", columnLabel: "categories", sortEnabled: false },
@@ -283,3 +293,11 @@ const deleteSelectedProducts = async () => {
   }
 };
 </script>
+<style>
+.product-image {
+  object-fit: cover;
+  border-radius: 50%;
+  max-width: 50px;
+  max-height: 50px;
+}
+</style>
