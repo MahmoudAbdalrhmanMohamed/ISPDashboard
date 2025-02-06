@@ -280,6 +280,21 @@ const MainMenuConfig: Array<MenuItem> = [
           },
         ],
       },
+      {
+        sectionTitle: "team",
+        route: "/team",
+        keenthemesIcon: "abstract-18",
+        sub: [
+          {
+            heading: "team",
+            route: "/apps/team",
+          },
+          {
+            heading: "addTeam",
+            route: "/apps/team/add",
+          },
+        ],
+      },
     ],
   },
 ];

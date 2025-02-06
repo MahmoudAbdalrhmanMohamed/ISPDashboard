@@ -543,6 +543,34 @@ const routes: Array<RouteRecordRaw> = [
           breadcrumbs: ["Apps", "careers", "careerRequets"],
         },
       },
+
+      {
+        path: "/apps/team",
+        name: "apps-team",
+        component: () => import("@/views/apps/ourTeam/TeamComponent.vue"),
+        meta: {
+          pageTitle: "team",
+          breadcrumbs: ["Apps", "team"],
+        },
+      },
+      {
+        path: "/apps/team/add",
+        name: "apps-team-add",
+        component: () => import("@/views/apps/ourTeam/addOne.vue"),
+        meta: {
+          pageTitle: "team",
+          breadcrumbs: ["Apps", "team", "add"],
+        },
+      },
+      {
+        path: "/apps/team/update/:id",
+        name: "apps-team-update",
+        component: () => import("@/views/apps/ourTeam/updateOne.vue"),
+        meta: {
+          pageTitle: "team",
+          breadcrumbs: ["Apps", "team", "update"],
+        },
+      },
       // {
       //   path: "/apps/products/add",
       //   name: "apps-products-add",
