@@ -1,41 +1,177 @@
 <template>
-  <div v-if="!loading" class="md:p-10">
+  <div v-if="!loading" class="md:py-10">
     <!-- Form -->
     <VForm
       class="form w-full"
-      id="kt_add_writer_form"
+      id="kt_website_settings_form"
       @submit="onSubmit"
       :validation-schema="schema"
     >
       <!-- Heading -->
       <div class="text-center mb-10">
         <h1 class="text-gray-900 mb-3 text-xl md:text-3xl">
-          {{ $t("addWriter") }}
+          {{ $t("websiteSettings") }}
         </h1>
       </div>
 
-      <!-- Names and Slugs in Multiple Languages -->
-      <div v-for="lang in languages" :key="lang.code" class="mb-10">
-        <h2 class="text-2xl capitalize font-bold text-gray-800">
-          {{ $t(lang.lang) }}
-        </h2>
-        <hr class="w-full mb-4 bg-gray-800" />
+      <!-- Website URL -->
+      <!-- <div class="fv-row mb-5">
+        <label class="form-label fs-6 fw-bold text-gray-900">
+          {{ $t("website") }}
+        </label>
+        <Field
+          name="website"
+          class="form-control form-control-lg form-control-solid"
+          type="text"
+          autocomplete="off"
+        />
+        <div class="fv-plugins-message-container">
+          <div class="fv-help-block">
+            <ErrorMessage name="website" />
+          </div>
+        </div>
+      </div> -->
 
-        <!-- Name -->
-        <div class="fv-row mb-5">
-          <label class="form-label fs-6 fw-bold text-gray-900">{{
-            $t("name")
-          }}</label>
-          <Field
-            :name="`name_${lang.code}`"
-            class="form-control form-control-lg form-control-solid"
-            type="text"
-            autocomplete="off"
-          />
-          <div class="fv-plugins-message-container">
-            <div class="fv-help-block">
-              <ErrorMessage :name="`name_${lang.code}`" />
-            </div>
+      <!-- Phone 1 -->
+      <div class="fv-row mb-5">
+        <label class="form-label fs-6 fw-bold text-gray-900">
+          {{ $t("phone1") }}
+        </label>
+        <Field
+          name="phone1"
+          class="form-control form-control-lg form-control-solid"
+          type="text"
+          autocomplete="off"
+        />
+        <div class="fv-plugins-message-container">
+          <div class="fv-help-block">
+            <ErrorMessage name="phone1" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone 2 -->
+      <div class="fv-row mb-5">
+        <label class="form-label fs-6 fw-bold text-gray-900">
+          {{ $t("phone2") }}
+        </label>
+        <Field
+          name="phone2"
+          class="form-control form-control-lg form-control-solid"
+          type="text"
+          autocomplete="off"
+        />
+        <div class="fv-plugins-message-container">
+          <div class="fv-help-block">
+            <ErrorMessage name="phone2" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Facebook URL -->
+      <div class="fv-row mb-5">
+        <label class="form-label fs-6 fw-bold text-gray-900">
+          {{ $t("facebook") }}
+        </label>
+        <Field
+          name="facebook"
+          class="form-control form-control-lg form-control-solid"
+          type="text"
+          autocomplete="off"
+        />
+        <div class="fv-plugins-message-container">
+          <div class="fv-help-block">
+            <ErrorMessage name="facebook" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Instagram URL -->
+      <div class="fv-row mb-5">
+        <label class="form-label fs-6 fw-bold text-gray-900">
+          {{ $t("instagram") }}
+        </label>
+        <Field
+          name="instagram"
+          class="form-control form-control-lg form-control-solid"
+          type="text"
+          autocomplete="off"
+        />
+        <div class="fv-plugins-message-container">
+          <div class="fv-help-block">
+            <ErrorMessage name="instagram" />
+          </div>
+        </div>
+      </div>
+
+      <!-- LinkedIn URL -->
+      <div class="fv-row mb-5">
+        <label class="form-label fs-6 fw-bold text-gray-900">
+          {{ $t("linkedin") }}
+        </label>
+        <Field
+          name="linkedin"
+          class="form-control form-control-lg form-control-solid"
+          type="text"
+          autocomplete="off"
+        />
+        <div class="fv-plugins-message-container">
+          <div class="fv-help-block">
+            <ErrorMessage name="linkedin" />
+          </div>
+        </div>
+      </div>
+
+      <!-- YouTube URL -->
+      <div class="fv-row mb-5">
+        <label class="form-label fs-6 fw-bold text-gray-900">
+          {{ $t("youtube") }}
+        </label>
+        <Field
+          name="youtube"
+          class="form-control form-control-lg form-control-solid"
+          type="text"
+          autocomplete="off"
+        />
+        <div class="fv-plugins-message-container">
+          <div class="fv-help-block">
+            <ErrorMessage name="youtube" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="fv-row mb-5">
+        <label class="form-label fs-6 fw-bold text-gray-900">
+          {{ $t("email") }}
+        </label>
+        <Field
+          name="email"
+          class="form-control form-control-lg form-control-solid"
+          type="email"
+          autocomplete="off"
+        />
+        <div class="fv-plugins-message-container">
+          <div class="fv-help-block">
+            <ErrorMessage name="email" />
+          </div>
+        </div>
+      </div>
+
+      <!-- WhatsApp URL -->
+      <div class="fv-row mb-5">
+        <label class="form-label fs-6 fw-bold text-gray-900">
+          {{ $t("whatsapp") }}
+        </label>
+        <Field
+          name="whatsapp"
+          class="form-control form-control-lg form-control-solid"
+          type="text"
+          autocomplete="off"
+        />
+        <div class="fv-plugins-message-container">
+          <div class="fv-help-block">
+            <ErrorMessage name="whatsapp" />
           </div>
         </div>
       </div>
@@ -45,10 +181,10 @@
         <button
           type="submit"
           ref="submitButton"
-          id="kt_add_writer_submit"
+          id="kt_website_settings_submit"
           class="btn btn-lg btn-primary w-100 mb-5"
         >
-          <span class="indicator-label">{{ $t("addWriter") }}</span>
+          <span class="indicator-label">{{ $t("saveSettings") }}</span>
           <span class="indicator-progress">
             {{ $t("pleaseWait") }}
             <span
@@ -76,27 +212,19 @@ import { useI18n } from "vue-i18n";
 const router = useRouter();
 const loading = ref(false);
 const submitButton = ref(null);
-
-const languages = [
-  { lang: "arabic", code: "ar" },
-  { lang: "english", code: "en" },
-  { lang: "chinese", code: "zh" },
-  { lang: "indian", code: "hi" },
-  { lang: "italian", code: "it" },
-  { lang: "spanish", code: "es" },
-  { lang: "russian", code: "ru" },
-  { lang: "turkish", code: "tr" },
-  { lang: "french", code: "fr" },
-  { lang: "german", code: "de" },
-];
+const { t } = useI18n();
 
 // Validation schema
 const schema = Yup.object().shape({
-  ...Object.fromEntries(
-    languages.flatMap(({ code }) => [
-      [`name_${code}`, Yup.string().required("Name is required")],
-    ]),
-  ),
+  // website: Yup.string().url("Invalid URL").required("Website URL is required"),
+  phone1: Yup.string().required("Phone 1 is required"),
+  phone2: Yup.string().required("Phone 2 is required"),
+  facebook: Yup.string().url("Invalid URL").nullable(),
+  instagram: Yup.string().url("Invalid URL").nullable(),
+  linkedin: Yup.string().url("Invalid URL").nullable(),
+  youtube: Yup.string().url("Invalid URL").nullable(),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  whatsapp: Yup.string().url("Invalid URL").nullable(),
 });
 
 // Submit form
@@ -111,17 +239,20 @@ const onSubmit = async (values) => {
 
     // Prepare payload
     const payload = {
-      name: {},
+      // website: values.website,
+      phone1: values.phone1,
+      phone2: values.phone2,
+      facebook: values.facebook,
+      instagram: values.instagram,
+      linkedin: values.linkedin,
+      youtube: values.youtube,
+      email: values.email,
+      whatsapp: values.whatsapp,
     };
 
-    // Add multilingual fields
-    languages.forEach(({ code }) => {
-      payload.name[code] = values[`name_${code}`];
-    });
-
-    // Make API request
+    // Make API request to website settings endpoint
     const response = await fetch(
-      `${import.meta.env.VITE_APP_API_URL_NEW}/writers`,
+      `${import.meta.env.VITE_APP_API_URL_NEW}/website-settings`,
       {
         method: "POST",
         headers: {
@@ -136,7 +267,7 @@ const onSubmit = async (values) => {
 
     if (response.ok && data?.status) {
       Swal.fire({
-        text: data.message || "Writer successfully added!",
+        text: data.message || "Website settings saved successfully!",
         icon: "success",
         buttonsStyling: false,
         confirmButtonText: "Ok, got it!",
@@ -145,10 +276,10 @@ const onSubmit = async (values) => {
           confirmButton: "btn fw-semibold btn-light-primary",
         },
       }).then(() => {
-        router.push({ name: "apps-writers-all" });
+        router.push({ name: "apps-website-settings" });
       });
     } else {
-      throw new Error(data?.message || "Failed to add writer.");
+      throw new Error(data?.message || "Failed to save website settings.");
     }
   } catch (error) {
     Swal.fire({

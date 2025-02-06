@@ -62,14 +62,9 @@
         </div>
       </div>
 
-      <div class="modal-footer flex-center">
-        <button type="button" class="btn btn-light me-3" @click="resetForm">
-          {{ $t("discard") }}
-        </button>
-        <button class="btn btn-lg btn-primary" type="submit">
-          {{ $t("updateProduct") }}
-        </button>
-      </div>
+      <button class="btn w-full text-center btn-lg btn-primary" type="submit">
+        {{ $t("updateProduct") }}
+      </button>
     </el-form>
   </div>
 </template>

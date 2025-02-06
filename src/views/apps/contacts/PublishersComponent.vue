@@ -26,13 +26,13 @@
           class="d-flex justify-content-end"
           data-kt-customer-table-toolbar="base"
         >
-          <router-link
+          <!-- <router-link
             :to="{ name: 'apps-contacts-add' }"
             class="btn btn-primary"
           >
             <KTIcon icon-name="plus" icon-class="fs-2" />
             {{ $t("addContact") }}
-          </router-link>
+          </router-link> -->
         </div>
         <div
           v-else

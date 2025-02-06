@@ -6,7 +6,7 @@
       :rules="rules"
       @submit.prevent="onSubmit"
     >
-      <div class="modal-body py-10 px-lg-17">
+      <div class="modal-body py-10">
         <!-- Loop through languages for multi-language fields -->
         <div v-for="lang in languages" :key="lang.code" class="mb-10">
           <h2 class="text-2xl capitalize font-bold text-gray-800">
@@ -107,29 +107,19 @@
         </div>
       </div>
 
-      <div class="modal-footer flex-center">
-        <button
-          type="button"
-          class="btn btn-light me-3"
-          @click="resetForm"
-          aria-label="Discard Changes"
-        >
-          {{ $t("discard") }}
-        </button>
-        <button
-          class="btn btn-lg btn-primary d-flex items-center"
-          :data-kt-indicator="loading ? 'on' : null"
-          type="submit"
-        >
-          <span v-if="!loading">{{ $t("addProduct") }}</span>
-          <span v-if="loading" class="indicator-progress">
-            {{ $t("pleaseWait") }}
-            <span
-              class="spinner-border spinner-border-sm align-middle ms-2"
-            ></span>
-          </span>
-        </button>
-      </div>
+      <button
+        class="btn btn-lg btn-primary flex justify-center w-full text-center items-center"
+        :data-kt-indicator="loading ? 'on' : null"
+        type="submit"
+      >
+        <span v-if="!loading">{{ $t("addProduct") }}</span>
+        <span v-if="loading" class="indicator-progress">
+          {{ $t("pleaseWait") }}
+          <span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </span>
+      </button>
     </el-form>
 
     <el-dialog v-model="dialogVisible">

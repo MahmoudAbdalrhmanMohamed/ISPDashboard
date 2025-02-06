@@ -15,6 +15,38 @@
           :placeholder="$t('searchImages')"
         />
       </div>
+      <div class="card-toolbar">
+        <div
+          v-if="!selectedIds.length"
+          class="d-flex justify-content-end"
+          data-kt-customer-table-toolbar="base"
+        >
+          <router-link
+            :to="{ name: 'apps-clinets-add' }"
+            class="btn btn-primary"
+          >
+            <KTIcon icon-name="plus" icon-class="fs-2" />
+            {{ $t("addImage") }}
+          </router-link>
+        </div>
+        <div
+          v-else
+          class="d-flex justify-content-end align-items-center"
+          data-kt-customer-table-toolbar="selected"
+        >
+          <div class="fw-bold me-5">
+            <span class="me-2">{{ selectedIds.length }}</span>
+            {{ $t("selected") }}
+          </div>
+          <button
+            type="button"
+            class="btn btn-danger"
+            @click="deleteSelectedContacts"
+          >
+            {{ $t("deleteSelected") }}
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Table -->
@@ -65,7 +97,11 @@ const tableData = ref([]);
 const initImages = ref([]);
 const { locale } = useI18n();
 const dataVal = ref();
-
+const selectedIds = ref([]);
+// Handle item selection
+const onItemSelect = (selectedItems) => {
+  selectedIds.value = selectedItems;
+};
 // Fetch images
 const fetching = async (page = 1) => {
   try {

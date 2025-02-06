@@ -82,6 +82,15 @@ const routes: Array<RouteRecordRaw> = [
       },
 
       {
+        path: "/apps/website/settings",
+        name: "apps-website-settings",
+        component: () => import("@/views/apps/writers/addWriter.vue"),
+        meta: {
+          pageTitle: "settings",
+          breadcrumbs: ["Apps", "website", "settings"],
+        },
+      },
+      {
         path: "/apps/writers/addWriter",
         name: "apps-writers-add",
         component: () => import("@/views/apps/writers/addWriter.vue"),

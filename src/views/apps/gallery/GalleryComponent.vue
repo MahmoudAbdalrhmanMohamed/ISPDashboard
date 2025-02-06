@@ -15,6 +15,38 @@
           :placeholder="$t('searchImages')"
         />
       </div>
+      <div class="card-toolbar">
+        <div
+          v-if="!selectedIds.length"
+          class="d-flex justify-content-end"
+          data-kt-customer-table-toolbar="base"
+        >
+          <router-link
+            :to="{ name: 'apps-gallery-add' }"
+            class="btn btn-primary"
+          >
+            <KTIcon icon-name="plus" icon-class="fs-2" />
+            {{ $t("addImage") }}
+          </router-link>
+        </div>
+        <div
+          v-else
+          class="d-flex justify-content-end align-items-center"
+          data-kt-customer-table-toolbar="selected"
+        >
+          <div class="fw-bold me-5">
+            <span class="me-2">{{ selectedIds.length }}</span>
+            {{ $t("selected") }}
+          </div>
+          <button
+            type="button"
+            class="btn btn-danger"
+            @click="deleteSelectedContacts"
+          >
+            {{ $t("deleteSelected") }}
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Table -->
@@ -89,7 +121,7 @@ const fetching = async (page = 1) => {
     console.error("Error fetching images:", error);
   }
 };
-
+const selectedIds = ref([]);
 // Fetch initial data
 fetching(1);
 
@@ -104,6 +136,11 @@ const tableHeader = ref([
   { columnName: "image", columnLabel: "image", sortEnabled: false },
   { columnName: "actions", columnLabel: "actions", sortEnabled: false },
 ]);
+
+// Handle item selection
+const onItemSelect = (selectedItems) => {
+  selectedIds.value = selectedItems;
+};
 
 // Debounced search
 const debouncedSearch = debounce(() => {

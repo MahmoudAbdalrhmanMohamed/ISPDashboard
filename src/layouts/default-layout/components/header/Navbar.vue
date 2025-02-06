@@ -2,8 +2,8 @@
   <!--begin::Navbar-->
   <div class="app-navbar flex-shrink-0">
     <!--begin::Notifications-->
-    <div class="app-navbar-item ms-1 ms-md-4">
-      <!--begin::Menu- wrapper-->
+    <!-- <div class="app-navbar-item ms-1 ms-md-4">
+    
       <div
         class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
         data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
@@ -14,8 +14,8 @@
         <KTIcon icon-name="notification-status" icon-class="fs-2" />
       </div>
       <KTNotificationMenu />
-      <!--end::Menu wrapper-->
-    </div>
+     
+    </div> -->
     <!--end::Notifications-->
 
     <!--begin::Theme mode-->

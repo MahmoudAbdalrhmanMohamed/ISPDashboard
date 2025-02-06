@@ -211,7 +211,7 @@ const MainMenuConfig: Array<MenuItem> = [
           },
           {
             heading: "addGallery",
-            route: "/apps/gallery",
+            route: "/apps/gallery/add",
           },
         ],
       },
@@ -255,6 +255,28 @@ const MainMenuConfig: Array<MenuItem> = [
           {
             heading: "AddPaterner",
             route: "/apps/parteners/add",
+          },
+        ],
+      },
+      {
+        sectionTitle: "settings",
+        route: "/settings",
+        keenthemesIcon: "abstract-15",
+        sub: [
+          {
+            heading: "settings",
+            route: "/apps/website/settings",
+          },
+        ],
+      },
+      {
+        sectionTitle: "careers",
+        route: "/careers",
+        keenthemesIcon: "abstract-13",
+        sub: [
+          {
+            heading: "careers",
+            route: "/apps/careers",
           },
         ],
       },
