@@ -290,7 +290,7 @@ const MainMenuConfig: Array<MenuItem> = [
             route: "/apps/team",
           },
           {
-            heading: "addTeam",
+            heading: "addMember",
             route: "/apps/team/add",
           },
         ],
