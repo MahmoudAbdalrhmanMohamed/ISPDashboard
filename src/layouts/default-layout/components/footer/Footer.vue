@@ -24,7 +24,7 @@
       <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
         <li class="menu-item">
           <a
-            href="https://www.megatron-soft.com/about"
+            href="https://www.megatron-soft.com/en/about-us"
             target="_blank"
             class="menu-link px-2"
             >{{ $t("about") }}</a
@@ -32,7 +32,7 @@
         </li>
         <li class="menu-item">
           <a
-            href="https://www.megatron-soft.com/contact-us"
+            href="https://www.megatron-soft.com/en/contact-us"
             target="_blank"
             class="menu-link px-2"
             >{{ $t("support") }}</a
