@@ -209,6 +209,10 @@ const MainMenuConfig: Array<MenuItem> = [
             heading: "gallery",
             route: "/apps/gallery",
           },
+          {
+            heading: "addGallery",
+            route: "/apps/gallery",
+          },
         ],
       },
       {
