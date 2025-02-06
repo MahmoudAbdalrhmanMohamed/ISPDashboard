@@ -230,7 +230,7 @@ const MainMenuConfig: Array<MenuItem> = [
       {
         sectionTitle: "clinets",
         route: "/clinets",
-        keenthemesIcon: "abstract-20",
+        keenthemesIcon: "abstract-19",
         sub: [
           {
             heading: "clinets",

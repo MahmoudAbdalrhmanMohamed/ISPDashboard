@@ -1,67 +1,54 @@
 <template>
-  <div class="container">
-    <!-- Image Preview Dialog -->
-    <el-dialog v-model="dialogVisible">
-      <img width="100%" :src="dialogImageUrl" alt="Preview Image" />
-    </el-dialog>
+  <!-- Image Preview Dialog -->
+  <el-dialog v-model="dialogVisible">
+    <img width="100%" :src="dialogImageUrl" alt="Preview Image" />
+  </el-dialog>
 
-    <!-- Form for Image Update -->
-    <el-form
-      @submit.prevent="submit"
-      :model="localFormData"
-      :rules="rules"
-      ref="formRef"
+  <!-- Form for Image Update -->
+  <el-form
+    @submit.prevent="submit"
+    :model="localFormData"
+    :rules="rules"
+    ref="formRef"
+  >
+    <div class="modal-body py-10">
+      <!-- Photo Upload -->
+      <div class="fv-row mb-7">
+        <label class="required fs-6 fw-semibold mb-2">{{
+          $t("uploadPhoto")
+        }}</label>
+        <el-form-item prop="files">
+          <el-upload
+            v-model:file-list="localFormData.files"
+            class="upload-demo"
+            :limit="1"
+            :auto-upload="false"
+            accept=".jpg,.png"
+            list-type="picture-card"
+            :on-change="handleUpload"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+          >
+            <el-button type="primary">{{ $t("uploadPhoto") }}</el-button>
+          </el-upload>
+        </el-form-item>
+      </div>
+    </div>
+
+    <!-- Footer with buttons -->
+
+    <button
+      :data-kt-indicator="loading ? 'on' : null"
+      class="btn w-full btn-lg btn-primary flex text-center justify-center items-center"
+      type="submit"
     >
-      <div class="modal-body py-10 px-lg-17">
-        <!-- Photo Upload -->
-        <div class="fv-row mb-7">
-          <label class="required fs-6 fw-semibold mb-2">{{
-            $t("uploadPhoto")
-          }}</label>
-          <el-form-item prop="files">
-            <el-upload
-              v-model:file-list="localFormData.files"
-              class="upload-demo"
-              :limit="1"
-              :auto-upload="false"
-              accept=".jpg,.png"
-              list-type="picture-card"
-              :on-change="handleUpload"
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
-            >
-              <el-button type="primary">{{ $t("uploadPhoto") }}</el-button>
-            </el-upload>
-          </el-form-item>
-        </div>
-      </div>
-
-      <!-- Footer with buttons -->
-      <div class="modal-footer flex-center">
-        <button
-          type="button"
-          class="btn btn-light me-3"
-          @click="resetForm"
-          aria-label="Discard Changes"
-        >
-          {{ $t("discard") }}
-        </button>
-        <button
-          :data-kt-indicator="loading ? 'on' : null"
-          class="btn btn-lg btn-primary d-flex items-center"
-          type="submit"
-        >
-          <span v-if="!loading">{{ $t("updatePhoto") }}</span>
-          <span v-if="loading" class="indicator-progress">
-            {{ $t("pleaseWait") }}
-            <span
-              class="spinner-border spinner-border-sm align-middle ms-2"
-            ></span>
-          </span>
-        </button>
-      </div>
-    </el-form>
-  </div>
+      <span v-if="!loading">{{ $t("updatePhoto") }}</span>
+      <span v-if="loading" class="indicator-progress">
+        {{ $t("pleaseWait") }}
+        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+      </span>
+    </button>
+  </el-form>
 </template>
 
 <script setup>
@@ -206,29 +193,3 @@ const submit = async () => {
   });
 };
 </script>
-
-<style scoped>
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.upload-demo {
-  margin-top: 20px;
-}
-
-.modal-footer {
-  margin-top: 20px;
-}
-
-.el-button {
-  margin-top: 10px;
-}
-
-.img-thumbnail {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-}
-</style>
