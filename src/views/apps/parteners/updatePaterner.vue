@@ -52,23 +52,13 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import Swal from "sweetalert2";
 import { useFetch } from "@vueuse/core";
-import { hideModal } from "@/core/helpers/modal";
+import { useRouter, useRoute } from "vue-router";
 
-// Props and Emits
-const props = defineProps({
-  value: {
-    required: true,
-  },
-  workshop_id: {
-    default: "",
-  },
-});
-
-const emit = defineEmits(["submitted"]);
-
+const router = useRouter();
+const route = useRoute();
 // Local State
 const formRef = ref(null);
 const dialogImageUrl = ref("");
@@ -80,22 +70,8 @@ const id = ref(null);
 
 // Form data
 const localFormData = ref({
-  files: [{ url: "", name: "" }],
+  files: [],
 });
-
-// Watch Prop
-watch(
-  () => props.value,
-  (newVal) => {
-    localFormData.value.files[0].url = newVal.image || "";
-  },
-);
-watch(
-  () => props.workshop_id,
-  (newVal) => {
-    id.value = newVal || "";
-  },
-);
 
 // Validation Rules
 const rules = ref({
@@ -132,6 +108,26 @@ const resetForm = () => {
   };
 };
 
+const fecthing = async () => {
+  try {
+    const { data } = await useFetch(
+      `${import.meta.env.VITE_APP_API_URL_MEGATRON}/partners/${route.params.parteners}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      },
+    ).json();
+
+    localFormData.value.files[0] = {
+      url: data.value.data.image,
+      name: data.value.data.id,
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+fecthing();
 // Submit Form
 const submit = async () => {
   if (!formRef.value) return;
@@ -144,9 +140,8 @@ const submit = async () => {
     try {
       const formDataToSend = new FormData();
 
-      if (localFormData.value.files.length && changeImg.value) {
-        formDataToSend.append("photo", localFormData.value.files[0].raw);
-        formDataToSend.append("workshop_id", id.value);
+      if (localFormData.value.files.length) {
+        formDataToSend.append("image_file", localFormData.value.files[0].raw);
       } else {
         Swal.fire({
           text: "Please select an image to upload.",
@@ -158,7 +153,7 @@ const submit = async () => {
       }
 
       const { data } = await useFetch(
-        `${import.meta.env.VITE_APP_API_URL_MEGATRON}/images/${id.value}`,
+        `${import.meta.env.VITE_APP_API_URL_MEGATRON}/partners/${route.params.parteners}?_method=PUT`,
         {
           method: "POST",
           body: formDataToSend,
@@ -177,8 +172,7 @@ const submit = async () => {
           confirmButtonText: "OK",
         });
         resetForm();
-        hideModal("#kt_modal_update_img");
-        emit("submitted", data.value);
+        router.push({ name: "apps-parteners" });
       } else {
         throw new Error("Update failed");
       }

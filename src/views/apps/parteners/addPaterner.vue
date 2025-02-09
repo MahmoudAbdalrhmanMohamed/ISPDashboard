@@ -42,7 +42,7 @@
       class="btn w-full btn-lg btn-primary flex text-center justify-center items-center"
       type="submit"
     >
-      <span v-if="!loading">{{ $t("updatePhoto") }}</span>
+      <span v-if="!loading">{{ $t("addPhoto") }}</span>
       <span v-if="loading" class="indicator-progress">
         {{ $t("pleaseWait") }}
         <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
@@ -52,23 +52,12 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import Swal from "sweetalert2";
 import { useFetch } from "@vueuse/core";
-import { hideModal } from "@/core/helpers/modal";
+import { useRouter } from "vue-router";
 
-// Props and Emits
-const props = defineProps({
-  value: {
-    required: true,
-  },
-  workshop_id: {
-    default: "",
-  },
-});
-
-const emit = defineEmits(["submitted"]);
-
+const router = useRouter();
 // Local State
 const formRef = ref(null);
 const dialogImageUrl = ref("");
@@ -80,22 +69,8 @@ const id = ref(null);
 
 // Form data
 const localFormData = ref({
-  files: [{ url: "", name: "" }],
+  files: [],
 });
-
-// Watch Prop
-watch(
-  () => props.value,
-  (newVal) => {
-    localFormData.value.files[0].url = newVal.image || "";
-  },
-);
-watch(
-  () => props.workshop_id,
-  (newVal) => {
-    id.value = newVal || "";
-  },
-);
 
 // Validation Rules
 const rules = ref({
@@ -144,9 +119,8 @@ const submit = async () => {
     try {
       const formDataToSend = new FormData();
 
-      if (localFormData.value.files.length && changeImg.value) {
-        formDataToSend.append("photo", localFormData.value.files[0].raw);
-        formDataToSend.append("workshop_id", id.value);
+      if (localFormData.value.files.length) {
+        formDataToSend.append("image_file", localFormData.value.files[0].raw);
       } else {
         Swal.fire({
           text: "Please select an image to upload.",
@@ -158,7 +132,7 @@ const submit = async () => {
       }
 
       const { data } = await useFetch(
-        `${import.meta.env.VITE_APP_API_URL_MEGATRON}/images/${id.value}`,
+        `${import.meta.env.VITE_APP_API_URL_MEGATRON}/partners`,
         {
           method: "POST",
           body: formDataToSend,
@@ -172,13 +146,12 @@ const submit = async () => {
 
       if (data.value?.status) {
         Swal.fire({
-          text: "Photo updated successfully!",
+          text: "Photo added successfully!",
           icon: "success",
           confirmButtonText: "OK",
         });
         resetForm();
-        hideModal("#kt_modal_update_img");
-        emit("submitted", data.value);
+        router.push({ name: "apps-parteners" });
       } else {
         throw new Error("Update failed");
       }

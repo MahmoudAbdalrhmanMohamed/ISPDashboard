@@ -41,7 +41,7 @@
           <button
             type="button"
             class="btn btn-danger"
-            @click="deleteSelectedContacts"
+            @click="deleteSelectedImages"
           >
             {{ $t("deleteSelected") }}
           </button>
@@ -72,11 +72,35 @@
           />
         </template>
 
-        <!-- Actions Column -->
         <template v-slot:actions="{ row: image }">
-          <button class="btn btn-sm btn-danger" @click="deleteImage(image.id)">
-            {{ $t("delete") }}
-          </button>
+          <a
+            href="#"
+            class="btn btn-sm btn-light btn-active-light-primary"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ $t("actions") }}
+            <KTIcon icon-name="down" icon-class="fs-5 m-0" />
+          </a>
+          <div
+            class="dropdown-menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
+            aria-labelledby="dropdownMenuButton"
+          >
+            <div class="menu-item px-3">
+              <router-link
+                class="menu-link px-3 w-full"
+                :to="`/apps/parteners/update/${image.id}`"
+              >
+                {{ $t("edit") }}
+              </router-link>
+            </div>
+
+            <div class="menu-item px-3">
+              <a @click="deleteImage(image.id)" class="menu-link px-3">{{
+                $t("delete")
+              }}</a>
+            </div>
+          </div>
         </template>
       </Datatable>
     </div>
@@ -103,7 +127,7 @@ const fetching = async (page = 1) => {
   try {
     load.value = true;
     const { data } = await useFetch(
-      `${import.meta.env.VITE_APP_API_URL_MEGATRON}/gallery?page=${page}`,
+      `${import.meta.env.VITE_APP_API_URL_MEGATRON}/partners?page=${page}`,
       {
         method: "GET",
         headers: {
@@ -168,7 +192,7 @@ const deleteImage = async (id) => {
 
     if (result.isConfirmed) {
       await useFetch(
-        `${import.meta.env.VITE_APP_API_URL_MEGATRON}/gallery/${id}`,
+        `${import.meta.env.VITE_APP_API_URL_MEGATRON}/partners/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -183,6 +207,54 @@ const deleteImage = async (id) => {
     console.error("Error deleting image:", error);
   }
 };
+// Delete multiple selected images
+const deleteSelectedImages = async () => {
+  try {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete them!",
+    });
+
+    if (result.isConfirmed) {
+      await Promise.all(
+        selectedIds.value.map((id) =>
+          useFetch(
+            `${import.meta.env.VITE_APP_API_URL_MEGATRON}/partners/${id}`,
+            {
+              method: "DELETE",
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+              },
+            },
+          ),
+        ),
+      );
+      await fetching(1);
+      selectedIds.value = []; // Clear selected IDs after deletion
+      Swal.fire(
+        "Deleted!",
+        "The selected images have been deleted.",
+        "success",
+      );
+    }
+  } catch (error) {
+    console.error("Error deleting selected images:", error);
+  }
+};
+// Initialize dropdowns
+onMounted(() => {
+  const dropdownElements = document.querySelectorAll(
+    '[data-bs-toggle="dropdown"]',
+  );
+  dropdownElements.forEach((element) => {
+    new Dropdown(element);
+  });
+});
 </script>
 
 <style>

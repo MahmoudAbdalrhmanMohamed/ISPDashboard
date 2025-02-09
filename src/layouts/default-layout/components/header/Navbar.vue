@@ -56,12 +56,13 @@
           class="rounded-3"
           alt="user"
         />
-        <img
+        <img v-else src="/logo.webp" alt="user" />
+        <!-- <img
           v-else
           src="/media/temp.webp"
           class="rounded-full bg-gray-600"
           alt="user"
-        />
+        /> -->
         <!-- <span v-else class="loader"></span> -->
       </div>
       <KTUserMenu />

@@ -10,12 +10,13 @@
         <!--begin::Avatar-->
         <div class="symbol symbol-50px me-5">
           <img v-if="dataVal" alt="Logo" :src="dataVal.image" />
-          <img
+          <!-- <img
             v-else
             src="/media/temp.webp"
             class="rounded-full bg-gray-600"
             alt="user"
-          />
+          /> -->
+          <img v-else src="/logo.webp" alt="user" />
         </div>
         <!--end::Avatar-->
 
@@ -201,7 +202,7 @@ const countries = {
     flag: getAssetPath("media/flags/Saudi_Arabia.svg"),
     name: t("Arabic"),
   },
- /*/ zh: {
+  /*/ zh: {
     flag: getAssetPath("media/flags/china.svg"),
     name: t("Chinese"),
   },
