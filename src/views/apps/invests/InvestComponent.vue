@@ -69,15 +69,19 @@
         }}</template>
         <!-- Phone Column -->
         <template v-slot:phone="{ row: contact }">{{ contact.phone }}</template>
-        <!-- Email Column -->
         <template v-slot:email="{ row: contact }">{{ contact.email }}</template>
+        <!-- Email Column -->
+        <template v-slot:company="{ row: contact }">{{
+          contact.company
+        }}</template>
+        <template v-slot:type="{ row: contact }">{{ contact.type }}</template>
         <!-- Interests Column -->
-        <template v-slot:interests="{ row: contact }">
+        <template v-slot:area="{ row: contact }">
           <div class="flex flex-wrap gap-1 items-center text-white">
             <span
               class="px-2 py-1 rounded"
               :class="classes[index % classes.length]"
-              v-for="(i, index) in contact.interests"
+              v-for="(i, index) in contact.area"
               >{{ i }}</span
             >
           </div>
@@ -106,7 +110,7 @@
             <div class="menu-item px-3">
               <router-link
                 class="menu-link px-3 w-full"
-                :to="`/apps/contacts/${contact.id}`"
+                :to="`/apps/invests/user/${contact.id}`"
               >
                 {{ $t("show") }}
               </router-link>
@@ -148,7 +152,7 @@ const fetching = async (page = 1) => {
     load.value = true;
 
     const response = await fetch(
-      `${import.meta.env.VITE_APP_API_URL_NEW}/contacts?page=${page}`,
+      `${import.meta.env.VITE_APP_API_URL_NEW}/invests?page=${page}`,
       {
         method: "GET",
         headers: {
@@ -209,8 +213,20 @@ const tableHeader = ref([
     columnWidth: 175,
   },
   {
-    columnName: "interests",
-    columnLabel: "interests",
+    columnName: "company",
+    columnLabel: "company",
+    sortEnabled: false,
+    columnWidth: 175,
+  },
+  {
+    columnName: "type",
+    columnLabel: "type",
+    sortEnabled: false,
+    columnWidth: 125,
+  },
+  {
+    columnName: "area",
+    columnLabel: "area",
     sortEnabled: false,
     columnWidth: 175,
   },

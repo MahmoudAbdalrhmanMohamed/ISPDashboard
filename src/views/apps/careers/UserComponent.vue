@@ -1,35 +1,24 @@
 <template>
-  <!--begin::Layout-->
   <div class="flex flex-col">
-    <!--begin::Sidebar-->
     <div v-if="dataToShow" class="flex-column flex-lg-row-auto w-full mb-10">
-      <!--begin::Card-->
       <div class="card mb-5 mb-xl-8">
-        <!--begin::Card body-->
         <div class="card-body pt-15">
-          <!--begin::Summary-->
           <div class="d-flex flex-center flex-column mb-5">
-            <!--begin::Avatar-->
             <div class="symbol symbol-100px symbol-circle mb-7">
               <img
-                :src="dataToShow.image"
+                :src="dataToShow.image || '/media/temp.webp'"
                 alt="image"
                 class="rounded-full w-[100px] h-[100px]"
               />
             </div>
-            <!--end::Avatar-->
-
-            <!--begin::Name-->
             <a
               href="#"
               class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1"
             >
-              {{ dataToShow.first_name }} {{ dataToShow.last_name }}
+              {{ dataToShow.fullname }}
             </a>
           </div>
-          <!--end::Summary-->
 
-          <!--begin::Details toggle-->
           <div class="d-flex flex-stack fs-4 py-3">
             <div
               class="fw-bold rotate collapsible"
@@ -42,43 +31,29 @@
               </span>
             </div>
           </div>
-          <!--end::Details toggle-->
 
-          <!--begin::Details content-->
           <div v-if="isDetailsOpen" id="kt_comic_user_details">
             <div class="py-5 fs-6">
-              <!--begin::Personal Info-->
-              <div class="fw-bold mt-5">{{ $t("firstName") }}</div>
-              <div class="text-gray-600">{{ dataToShow.first_name }}</div>
-
-              <div class="fw-bold mt-5">{{ $t("lastName") }}</div>
-              <div class="text-gray-600">{{ dataToShow.last_name }}</div>
-
               <div class="fw-bold mt-5">{{ $t("email") }}</div>
               <div class="text-gray-600">{{ dataToShow.email }}</div>
 
               <div class="fw-bold mt-5">{{ $t("phone") }}</div>
               <div class="text-gray-600">{{ dataToShow.phone }}</div>
 
-              <div class="fw-bold mt-5">{{ $t("city") }}</div>
-              <div class="text-gray-600">{{ dataToShow.city }}</div>
-
               <div class="fw-bold mt-5">{{ $t("country") }}</div>
               <div class="text-gray-600">{{ dataToShow.country }}</div>
 
-              <!--begin::Education-->
+              <div class="fw-bold mt-5">{{ $t("city") }}</div>
+              <div class="text-gray-600">{{ dataToShow.city }}</div>
+
               <div class="fw-bold mt-5">{{ $t("degree") }}</div>
               <div class="text-gray-600">{{ dataToShow.degree }}</div>
-
-              <div class="fw-bold mt-5">{{ $t("graduationYear") }}</div>
-              <div class="text-gray-600">{{ dataToShow.graduation_year }}</div>
 
               <div class="fw-bold mt-5">{{ $t("university") }}</div>
               <div class="text-gray-600">{{ dataToShow.university }}</div>
 
-              <!--begin::Experience-->
-              <div class="fw-bold mt-5">{{ $t("jobTitle") }}</div>
-              <div class="text-gray-600">{{ dataToShow.job_title }}</div>
+              <div class="fw-bold mt-5">{{ $t("recent_job") }}</div>
+              <div class="text-gray-600">{{ dataToShow.recent_job }}</div>
 
               <div class="fw-bold mt-5">{{ $t("company") }}</div>
               <div class="text-gray-600">{{ dataToShow.company }}</div>
@@ -86,74 +61,57 @@
               <div class="fw-bold mt-5">{{ $t("department") }}</div>
               <div class="text-gray-600">{{ dataToShow.department }}</div>
 
-              <div class="fw-bold mt-5">{{ $t("jobDescription") }}</div>
-              <div class="text-gray-600">{{ dataToShow.job_description }}</div>
+              <div class="fw-bold mt-5">{{ $t("description") }}</div>
+              <div class="text-gray-600">{{ dataToShow.description }}</div>
 
-              <!--begin::Skills-->
               <div class="fw-bold mt-5">{{ $t("skills") }}</div>
-              <div class="text-gray-600">{{ dataToShow.skills }}</div>
+              <div class="flex mt-2 items-center gap-1 flex-wrap">
+                <span
+                  v-for="(sk, index) in dataToShow.skills"
+                  :class="classes[index % classes.length]"
+                  class="px-3 py-2 rounded text-white"
+                  >{{ sk }}</span
+                >
+              </div>
 
               <div class="fw-bold mt-5">{{ $t("qualifications") }}</div>
-              <div class="text-gray-600">{{ dataToShow.qualifications }}</div>
-
-              <!--begin::Reference Endearment-->
-              <div v-if="dataToShow.references" class="fw-bold mt-5">
-                {{ $t("references") }}
-              </div>
-              <div v-if="dataToShow.references" class="text-gray-600">
-                {{ dataToShow.references.name }} -
-                {{ dataToShow.references.number }}
+              <div class="flex mt-2 items-center gap-1 flex-wrap">
+                <span
+                  v-for="(sk, index) in dataToShow.qualifications"
+                  :class="classes[index % classes.length]"
+                  class="px-3 py-2 rounded text-white"
+                  >{{ sk }}</span
+                >
               </div>
 
-              <!--begin::Resume-->
-              <div v-if="dataToShow.resume" class="fw-bold mt-5">
-                {{ $t("resume") }}
-              </div>
-              <div v-if="dataToShow.resume" class="text-gray-600">
-                <a :href="dataToShow.resume" target="_blank">View Resume</a>
-              </div>
-
-              <!--begin::Files-->
-              <div
-                v-if="dataToShow.files && dataToShow.files.length > 0"
-                class="fw-bold mt-5"
+              <div class="fw-bold mt-5">{{ $t("resume") }}</div>
+              <a
+                class="btn btn-accept me-2 w-fit mt-2"
+                :href="dataToShow.resume"
+                download
               >
-                {{ $t("files") }}
+                <i class="fas fa-check-circle me-2 pulse-icon"></i>
+                {{ $t("downloadResume") }}
+              </a>
+
+              <div class="fw-bold mt-5">{{ $t("moreFiles") }}</div>
+              <div class="flex gap-2 items-center flex-wrap">
+                <a
+                  v-for="file in dataToShow.files"
+                  class="btn btn-accept me-2 w-fit mt-2"
+                  :href="file"
+                  download
+                >
+                  <i class="fas fa-check-circle me-2 pulse-icon"></i>
+                  {{ $t("downloadResume") }}
+                </a>
               </div>
-              <ul v-if="dataToShow.files && dataToShow.files.length > 0">
-                <li v-for="(file, index) in dataToShow.files" :key="index">
-                  <a :href="file.url" target="_blank">{{ file.name }}</a>
-                </li>
-              </ul>
             </div>
           </div>
-          <!--end::Details content-->
-
-          <!--begin::Accept/Reject Buttons-->
-          <div class="flex items-center w-full mt-5">
-            <button
-              class="btn btn-accept me-2 w-full"
-              @click="acceptRequest(dataToShow.id)"
-            >
-              <i class="fas fa-check-circle me-2 pulse-icon"></i>
-              {{ $t("accept") }}
-            </button>
-            <button
-              class="btn btn-reject w-full"
-              @click="rejectRequest(dataToShow.id)"
-            >
-              <i class="fas fa-times-circle me-2 pulse-icon"></i>
-              {{ $t("reject") }}
-            </button>
-          </div>
-          <!--end::Accept/Reject Buttons-->
         </div>
-        <!--end::Card body-->
       </div>
-      <!--end::Card-->
     </div>
 
-    <!--begin::Main Content-->
     <div v-else class="w-full h-screen grid place-items-center">
       <span class="loader"></span>
     </div>
@@ -161,163 +119,79 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import Swal from "sweetalert2";
 import { useRoute } from "vue-router";
-
+const classes = ref([
+  "bg-red-500",
+  "bg-green-400",
+  "bg-yellow-400",
+  "bg-blue-400",
+  "bg-black",
+]);
 const { locale } = useI18n();
+const route = useRoute();
 
-// Reactive state for collapsible details
 const isDetailsOpen = ref(true);
+const dataToShow = ref(null);
+const loading = ref(false);
 
-// Toggle details visibility
 const toggleDetails = () => {
   isDetailsOpen.value = !isDetailsOpen.value;
 };
 
-const route = useRoute();
+const fetchData = async () => {
+  try {
+    loading.value = true;
+    const response = await fetch(
+      `${import.meta.env.VITE_APP_API_URL_NEW}/careers/${route.params.id}`,
+      {
+        method: "GET",
+        headers: {
+          "X-localization": locale.value,
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      },
+    );
 
-// Mock data (updated with personal information)
-const dataToShow = ref({
-  id: route.params.user,
-  first_name: "John",
-  last_name: "Doe",
-  email: "john.doe@example.com",
-  phone: "123-456-7890",
-  city: "New York",
-  country: "USA",
-  degree: "Bachelor's in Computer Science",
-  graduation_year: "2022",
-  university: "University of XYZ",
-  job_title: "Software Developer",
-  company: "Tech Corp",
-  department: "Engineering",
-  job_description: "Developing web applications",
-  skills: "JavaScript, Vue.js, Node.js",
-  qualifications: "Certified Developer",
-  references: { name: "Jane Doe", number: "987-654-3210" },
-  resume: "https://example.com/resume.pdf",
-  files: [
-    { name: "Portfolio", url: "https://example.com/portfolio.pdf" },
-    { name: "Certifications", url: "https://example.com/certifications.pdf" },
-  ],
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+
+    const data = await response.json();
+    if (data.status && data.data) {
+      dataToShow.value = data.data;
+    } else {
+      throw new Error("Invalid data format");
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+onMounted(() => {
+  fetchData();
 });
-
-// Event handlers for accept/reject actions
-const acceptRequest = async (id) => {
-  const confirmResult = await Swal.fire({
-    title: "Are you sure?",
-    text: "You are about to approve this request.",
-    icon: "question",
-    showCancelButton: true,
-    confirmButtonText: "Yes, approve it!",
-    cancelButtonText: "No, cancel!",
-    customClass: {
-      confirmButton: "btn btn-success",
-      cancelButton: "btn btn-secondary",
-    },
-  });
-
-  if (confirmResult.isConfirmed) {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_APP_API_URL_NEW}/requests/${id}/approve`,
-        {
-          method: "PATCH",
-          headers: {
-            "X-localization": locale.value,
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          },
-        },
-      );
-
-      if (response.ok) {
-        Swal.fire({
-          title: "Approved!",
-          text: "The request has been approved successfully.",
-          icon: "success",
-          confirmButtonText: "OK",
-          customClass: { confirmButton: "btn btn-primary" },
-        });
-      } else {
-        Swal.fire({
-          title: "Error!",
-          text: "Failed to approve the request.",
-          icon: "error",
-          confirmButtonText: "OK",
-          customClass: { confirmButton: "btn btn-primary" },
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        title: "Error!",
-        text: "An unexpected error occurred.",
-        icon: "error",
-        confirmButtonText: "OK",
-        customClass: { confirmButton: "btn btn-primary" },
-      });
-    }
-  }
-};
-
-const rejectRequest = async (id) => {
-  const confirmResult = await Swal.fire({
-    title: "Are you sure?",
-    text: "You are about to reject this request.",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonText: "Yes, reject it!",
-    cancelButtonText: "No, cancel!",
-    customClass: {
-      confirmButton: "btn btn-danger",
-      cancelButton: "btn btn-secondary",
-    },
-  });
-
-  if (confirmResult.isConfirmed) {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_APP_API_URL_NEW}/requests/${id}/reject`,
-        {
-          method: "PATCH",
-          headers: {
-            "X-localization": locale.value,
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          },
-        },
-      );
-
-      if (response.ok) {
-        Swal.fire({
-          title: "Rejected!",
-          text: "The request has been rejected successfully.",
-          icon: "success",
-          confirmButtonText: "OK",
-          customClass: { confirmButton: "btn btn-primary" },
-        });
-      } else {
-        Swal.fire({
-          title: "Error!",
-          text: "Failed to reject the request.",
-          icon: "error",
-          confirmButtonText: "OK",
-          customClass: { confirmButton: "btn btn-primary" },
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        title: "Error!",
-        text: "An unexpected error occurred.",
-        icon: "error",
-        confirmButtonText: "OK",
-        customClass: { confirmButton: "btn btn-primary" },
-      });
-    }
-  }
-};
 </script>
+
 <style scoped>
+.loader {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: #09f;
+  animation: spin 1s ease infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Base button styles */
 .btn {
   padding: 12px 24px;

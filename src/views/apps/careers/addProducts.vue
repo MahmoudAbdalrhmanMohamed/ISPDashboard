@@ -81,7 +81,7 @@
               class="upload-demo"
               :limit="1"
               :auto-upload="false"
-              accept=".jpg,.png"
+              accept="image/*"
               list-type="picture-card"
               :on-change="handleImageChange"
               :on-remove="handleRemove"

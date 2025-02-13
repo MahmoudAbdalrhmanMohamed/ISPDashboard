@@ -71,10 +71,12 @@
         :loading="load"
       >
         <!-- Name Column -->
-        <template v-slot:name="{ row: product }">{{ product.name }}</template>
+        <template v-slot:name="{ row: product }">{{
+          product.name[locale]
+        }}</template>
         <!-- Description Column -->
         <template v-slot:description="{ row: product }">{{
-          product.description
+          product.description[locale]
         }}</template>
         <template v-slot:im="{ row: product }">
           <img
@@ -94,7 +96,7 @@
           <div class="flex gap-1 items-center">
             <span
               :class="classes[index % classes.length]"
-              class="rounded-md px-2 py-1 text-white"
+              class="rounded-md px-2 py-1 flex-wrap text-white"
               v-for="(cat, index) in product.category"
               :key="index"
             >
@@ -197,12 +199,37 @@ watch(
 
 // Table header configuration
 const tableHeader = ref([
-  { columnName: "name", columnLabel: "name", sortEnabled: true },
-  { columnName: "image", columnLabel: "im", sortEnabled: false },
-  { columnName: "description", columnLabel: "description", sortEnabled: true },
+  {
+    columnName: "name",
+    columnLabel: "name",
+    sortEnabled: true,
+    columnWidth: 100,
+  },
+  {
+    columnName: "image",
+    columnLabel: "im",
+    sortEnabled: false,
+    columnWidth: 120,
+  },
+  {
+    columnName: "description",
+    columnLabel: "description",
+    sortEnabled: true,
+    columnWidth: 150,
+  },
   // { columnName: "country", columnLabel: "country", sortEnabled: true },
-  { columnName: "categories", columnLabel: "categories", sortEnabled: false },
-  { columnName: "actions", columnLabel: "actions", sortEnabled: false },
+  {
+    columnName: "categories",
+    columnLabel: "categories",
+    sortEnabled: false,
+    columnWidth: 180,
+  },
+  {
+    columnName: "actions",
+    columnLabel: "actions",
+    sortEnabled: false,
+    columnWidth: 100,
+  },
 ]);
 
 // Handle item selection

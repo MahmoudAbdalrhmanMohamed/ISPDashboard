@@ -228,29 +228,40 @@ const MainMenuConfig: Array<MenuItem> = [
         ],
       },
       {
-        sectionTitle: "clinets",
-        route: "/clinets",
+        sectionTitle: "invests",
+        route: "/invests",
+        keenthemesIcon: "abstract-42",
+        sub: [
+          {
+            heading: "invests",
+            route: "/apps/invests",
+          },
+        ],
+      },
+      {
+        sectionTitle: "clients",
+        route: "/clients",
         keenthemesIcon: "abstract-19",
         sub: [
           {
             heading: "clinets",
-            route: "/apps/clinets",
+            route: "/apps/clients",
           },
           {
-            heading: "addClinet",
-            route: "/apps/clinets/add",
+            heading: "addClient",
+            route: "/apps/clients/add",
           },
         ],
       },
       {
         sectionTitle: "paterners",
-        route: "/apps/paterners",
+        route: "/paterners",
         keenthemesIcon: "chart",
         bootstrapIcon: "bi-printer",
         sub: [
           {
             heading: "paterners",
-            route: "/apps/paterners",
+            route: "/apps/parteners",
           },
           {
             heading: "AddPaterner",
@@ -280,21 +291,21 @@ const MainMenuConfig: Array<MenuItem> = [
           },
         ],
       },
-      {
-        sectionTitle: "team",
-        route: "/team",
-        keenthemesIcon: "abstract-18",
-        sub: [
-          {
-            heading: "team",
-            route: "/apps/team",
-          },
-          {
-            heading: "addMember",
-            route: "/apps/team/add",
-          },
-        ],
-      },
+      // {
+      //   sectionTitle: "team",
+      //   route: "/team",
+      //   keenthemesIcon: "abstract-18",
+      //   sub: [
+      //     {
+      //       heading: "team",
+      //       route: "/apps/team",
+      //     },
+      //     {
+      //       heading: "addMember",
+      //       route: "/apps/team/add",
+      //     },
+      //   ],
+      // },
       {
         sectionTitle: "categories",
         route: "/categories",

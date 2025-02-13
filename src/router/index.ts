@@ -519,8 +519,8 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
-        path: "/apps/clinets",
-        name: "apps-clinets",
+        path: "/apps/clients",
+        name: "apps-clients",
         component: () => import("@/views/apps/ourClients/ClientsComponent.vue"),
         meta: {
           pageTitle: "clinets",
@@ -528,8 +528,8 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
-        path: "/apps/clinets/add",
-        name: "apps-clinets-add",
+        path: "/apps/clients/add",
+        name: "apps-clients-add",
         component: () => import("@/views/apps/ourClients/addClient.vue"),
         meta: {
           pageTitle: "clinets",
@@ -537,12 +537,40 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
-        path: "/apps/clinets/update/:clinets",
-        name: "apps-clinets-update",
+        path: "/apps/clients/update/:clients",
+        name: "apps-clients-update",
         component: () => import("@/views/apps/ourClients/updateClient.vue"),
         meta: {
-          pageTitle: "clinets",
-          breadcrumbs: ["Apps", "clinets", "update"],
+          pageTitle: "clients",
+          breadcrumbs: ["Apps", "clients", "update"],
+        },
+      },
+      {
+        path: "/apps/parteners",
+        name: "apps-parteners",
+        component: () =>
+          import("@/views/apps/parteners/PaternersComponent.vue"),
+        meta: {
+          pageTitle: "parteners",
+          breadcrumbs: ["Apps", "parteners"],
+        },
+      },
+      {
+        path: "/apps/parteners/add",
+        name: "apps-parteners-add",
+        component: () => import("@/views/apps/parteners/addPaterner.vue"),
+        meta: {
+          pageTitle: "parteners",
+          breadcrumbs: ["Apps", "parteners", "add"],
+        },
+      },
+      {
+        path: "/apps/parteners/update/:parteners",
+        name: "apps-parteners-update",
+        component: () => import("@/views/apps/parteners/updatePaterner.vue"),
+        meta: {
+          pageTitle: "parteners",
+          breadcrumbs: ["Apps", "parteners", "update"],
         },
       },
       {
@@ -556,6 +584,15 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
+        path: "/apps/contacts/:id",
+        name: "apps-contacts-one",
+        component: () => import("@/views/apps/contacts/ContactUser.vue"),
+        meta: {
+          pageTitle: "contacts",
+          breadcrumbs: ["Apps", "contacts", "one"],
+        },
+      },
+      {
         path: "/apps/careers",
         name: "apps-careers",
         component: () => import("@/views/apps/careers/CareersComponent.vue"),
@@ -565,12 +602,30 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
-        path: "/apps/careers/user/:user",
+        path: "/apps/careers/user/:id",
         name: "apps-careers/user",
         component: () => import("@/views/apps/careers/UserComponent.vue"),
         meta: {
           pageTitle: "careers",
           breadcrumbs: ["Apps", "careers", "careerRequets"],
+        },
+      },
+      {
+        path: "/apps/invests",
+        name: "apps-invests",
+        component: () => import("@/views/apps/invests/InvestComponent.vue"),
+        meta: {
+          pageTitle: "invests",
+          breadcrumbs: ["Apps", "invests"],
+        },
+      },
+      {
+        path: "/apps/invests/user/:id",
+        name: "apps-invests/user",
+        component: () => import("@/views/apps/invests/InvestUser.vue"),
+        meta: {
+          pageTitle: "invests",
+          breadcrumbs: ["Apps", "invests", "investRequets"],
         },
       },
 

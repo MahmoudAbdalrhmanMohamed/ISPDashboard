@@ -83,7 +83,7 @@
     <!--end::Menu item-->
 
     <!--begin::Menu item-->
-    <div class="menu-item px-5 my-1">
+    <!-- <div class="menu-item px-5 my-1">
       <router-link to="/apps/admins/updateName" class="menu-link px-5">
         {{ $t("updateName") }}
       </router-link>
@@ -97,7 +97,7 @@
       <router-link to="/apps/admins/updatePassword" class="menu-link px-5">
         {{ $t("updatePassword") }}
       </router-link>
-    </div>
+    </div> -->
 
     <!--end::Menu item-->
 

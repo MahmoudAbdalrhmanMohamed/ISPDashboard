@@ -1,7 +1,7 @@
 <template>
   <div
     class="card test card-flush bgi-no-repeat bgi-size-contain bgi-position-x-end"
-    :class="className"
+    :class="(className, bgColor)"
   >
     <!--begin::Header-->
     <div class="card-header pt-5">
@@ -33,10 +33,11 @@ defineProps({
   usersCount: { required: false },
   usersVerifiedCount: { required: false },
   description: { type: String, required: true },
+  bgColor: { type: String, required: false },
 });
 </script>
 
-<style scoped>
+<!-- <style scoped>
 .test {
   background: #654ea3; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -50,4 +51,4 @@ defineProps({
     #654ea3
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
-</style>
+</style> -->

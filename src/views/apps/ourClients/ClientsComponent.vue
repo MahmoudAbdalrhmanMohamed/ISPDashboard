@@ -22,7 +22,7 @@
           data-kt-customer-table-toolbar="base"
         >
           <router-link
-            :to="{ name: 'apps-clinets-add' }"
+            :to="{ name: 'apps-clients-add' }"
             class="btn btn-primary"
           >
             <KTIcon icon-name="plus" icon-class="fs-2" />

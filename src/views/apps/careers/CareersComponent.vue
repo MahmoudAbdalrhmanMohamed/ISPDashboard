@@ -71,24 +71,30 @@
         :loading="load"
       >
         <!-- First Name Column -->
-        <template v-slot:first_name="{ row: career }">{{
-          career.first_name
+        <template v-slot:fullname="{ row: career }">{{
+          career.fullname
         }}</template>
         <!-- Last Name Column -->
-        <template v-slot:last_name="{ row: career }">{{
-          career.last_name
-        }}</template>
+
         <!-- Email Column -->
         <template v-slot:email="{ row: career }">{{ career.email }}</template>
         <!-- Phone Number Column -->
-        <template v-slot:phone_number="{ row: career }">{{
-          career.phone_number
-        }}</template>
+        <template v-slot:phone="{ row: career }">{{ career.phone }}</template>
         <!-- City Column -->
-        <template v-slot:city="{ row: career }">{{ career.city }}</template>
-        <!-- Country Column -->
         <template v-slot:country="{ row: career }">{{
           career.country
+        }}</template>
+        <!-- Country Column -->
+        <template v-slot:skills="{ row: career }">
+          <div class="flex flex-wrap gap-1 items-center text-white">
+            <span
+              class="px-2 py-1 rounded"
+              :class="classes[index % classes.length]"
+              v-for="(i, index) in career.skills"
+              >{{ i }}</span
+            >
+          </div>
+          {{
         }}</template>
         <!-- Actions Column -->
         <template v-slot:actions="{ row: career }">
@@ -178,17 +184,43 @@ watch(
 
 // Table header configuration
 const tableHeader = ref([
-  { columnName: "first_name", columnLabel: "First Name", sortEnabled: true },
-  { columnName: "last_name", columnLabel: "Last Name", sortEnabled: true },
-  { columnName: "email", columnLabel: "Email", sortEnabled: true },
   {
-    columnName: "phone_number",
-    columnLabel: "Phone Number",
+    columnName: "fullname",
+    columnLabel: "fullname",
+    sortEnabled: true,
+    columnWidth: 175,
+  },
+  {
+    columnName: "email",
+    columnLabel: "email",
+    sortEnabled: true,
+    columnWidth: 175,
+  },
+  {
+    columnName: "phone",
+    columnLabel: "phone",
+    columnWidth: 175,
+
     sortEnabled: true,
   },
-  { columnName: "city", columnLabel: "City", sortEnabled: true },
-  { columnName: "country", columnLabel: "Country", sortEnabled: true },
-  { columnName: "actions", columnLabel: "Actions", sortEnabled: false },
+  {
+    columnName: "country",
+    columnLabel: "country",
+    sortEnabled: true,
+    columnWidth: 175,
+  },
+  {
+    columnName: "skills",
+    columnLabel: "skills",
+    sortEnabled: true,
+    columnWidth: 175,
+  },
+  {
+    columnName: "actions",
+    columnLabel: "actions",
+    sortEnabled: false,
+    columnWidth: 175,
+  },
 ]);
 
 // Handle item selection
@@ -256,39 +288,67 @@ const deleteCareer = async (id) => {
   }
 };
 
-// Delete selected careers
 const deleteSelectedCareers = async () => {
-  try {
-    const result = await Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete them!",
-    });
+  if (!selectedIds.value.length) return;
 
-    if (result.isConfirmed) {
-      await useFetch(
-        `${import.meta.env.VITE_APP_API_URL_MEGATRON}/careers/delete-selected`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          },
-          body: JSON.stringify({ ids: selectedIds.value }),
-        },
+  const confirmResult = await Swal.fire({
+    title: "Are you sure?",
+    text: `You are about to delete ${selectedIds.value.length} careers.`,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Yes, delete them!",
+    cancelButtonText: "No, cancel!",
+    customClass: {
+      confirmButton: "btn btn-danger",
+      cancelButton: "btn btn-secondary",
+    },
+  });
+
+  if (confirmResult.isConfirmed) {
+    try {
+      await Promise.all(
+        selectedIds.value.map((id) =>
+          useFetch(`${import.meta.env.VITE_APP_API_URL_NEW}/careers/${id}`, {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+          }),
+        ),
       );
-      await fetching(1);
-      Swal.fire(
-        "Deleted!",
-        "The selected careers have been deleted.",
-        "success",
+
+      tableData.value = tableData.value.filter(
+        (contact) => !selectedIds.value.includes(contact.id),
       );
+      initCareers.value = initCareers.value.filter(
+        (contact) => !selectedIds.value.includes(contact.id),
+      );
+
+      Swal.fire({
+        title: "Deleted!",
+        text: "The selected careers have been deleted.",
+        icon: "success",
+        confirmButtonText: "OK",
+        customClass: { confirmButton: "btn btn-primary" },
+      });
+      selectedIds.value = [];
+    } catch (error) {
+      console.error("Error deleting selected careers:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to delete some careers. Please try again.",
+        icon: "error",
+        confirmButtonText: "OK",
+        customClass: { confirmButton: "btn btn-danger" },
+      });
     }
-  } catch (error) {
-    console.error("Error deleting selected careers:", error);
   }
 };
+const classes = ref([
+  "bg-red-500",
+  "bg-green-400",
+  "bg-yellow-400",
+  "bg-blue-400",
+  "bg-black",
+]);
 </script>

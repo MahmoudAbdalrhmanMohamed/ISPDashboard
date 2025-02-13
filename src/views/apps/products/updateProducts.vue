@@ -75,7 +75,7 @@
               class="upload-demo"
               :limit="1"
               :auto-upload="false"
-              accept=".jpg,.png"
+              accept="image/*"
               list-type="picture-card"
               :on-change="handleImageChange"
               :on-remove="handleRemove"
@@ -170,9 +170,9 @@ const rules = ref({
       trigger: "change",
     },
   ],
-  imageFile: [
-    { required: true, message: "Product Image is required", trigger: "change" },
-  ],
+  // imageFile: [
+  //   { required: true, message: "Product Image is required", trigger: "change" },
+  // ],
 });
 
 const dataVal = ref([]);
@@ -250,6 +250,14 @@ fetchingV2();
 const onSubmit = async () => {
   formRef.value.validate(async (valid) => {
     if (!valid) return;
+    if (errorVal.value) {
+      Swal.fire({
+        text: "Image Is reqiured",
+        icon: "error",
+        confirmButtonText: "Retry",
+      });
+      return;
+    }
     loading.value = true;
     try {
       const payload = new FormData();
@@ -263,9 +271,10 @@ const onSubmit = async () => {
           formData.value.descriptions[code],
         );
       });
-      if (imageFileList.value.length) {
+      if (errorVal.value) {
         payload.append("image_file", imageFileList.value[0].raw);
       }
+
       const response = await fetch(
         `${import.meta.env.VITE_APP_API_URL_NEW}/products/${route.params.product}?_method=PUT`,
         {
@@ -298,13 +307,16 @@ const onSubmit = async () => {
     }
   });
 };
+const errorVal = ref(false);
 
 const handleImageChange = (file) => {
   imageFileList.value = [file];
+  errorVal.value = false;
 };
 
 const handleRemove = () => {
   imageFileList.value = [];
+  errorVal.value = true;
 };
 
 const handlePreview = (uploadFile) => {

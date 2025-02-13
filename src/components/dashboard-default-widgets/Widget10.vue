@@ -21,16 +21,19 @@
                 class="p-0 pb-3 min-w-175px px-6"
                 :class="locale === 'en' ? 'text-start' : 'text-end'"
               >
-                {{ $t("photo") }}
+                {{ $t("fullname") }}
               </th>
               <th
                 class="p-0 pb-3 min-w-100px"
                 :class="locale === 'en' ? 'text-start' : 'text-end'"
               >
-                {{ $t("status") }}
+                {{ $t("email") }}
               </th>
               <th class="p-0 pb-3 min-w-100px">
-                {{ $t("address") }}
+                {{ $t("phone") }}
+              </th>
+              <th class="p-0 pb-3 min-w-100px">
+                {{ $t("interests") }}
               </th>
               <th class="p-0 pb-3 w-50px text-end">{{ $t("view") }}</th>
             </tr>
@@ -39,47 +42,53 @@
 
           <!--begin::Table body-->
           <tbody>
-            <template v-if="workshops.length">
-              <template v-for="row in workshops" :key="row.id">
+            <template v-if="contacts.length">
+              <template v-for="contact in contacts" :key="contact.id">
                 <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div class="symbol symbol-50px mx-4">
-                        <img :src="row.image" class="" alt="" />
-                      </div>
+                  <!-- Full Name Column -->
+                  <td
+                    class="p-0"
+                    :class="locale === 'en' ? 'text-start' : 'text-end'"
+                  >
+                    <span class="text-base md:text-lg">{{
+                      contact.fullname
+                    }}</span>
+                  </td>
+
+                  <!-- Email Column -->
+                  <td
+                    class="p-0"
+                    :class="locale === 'en' ? 'text-start' : 'text-end'"
+                  >
+                    <span class="text-base md:text-lg">{{
+                      contact.email
+                    }}</span>
+                  </td>
+
+                  <!-- Phone Column -->
+                  <td class="p-0">
+                    <span class="text-base md:text-lg">{{
+                      contact.phone
+                    }}</span>
+                  </td>
+
+                  <!-- Interests Column -->
+                  <td class="p-0">
+                    <div class="flex flex-wrap gap-1 items-center">
+                      <span
+                        v-for="(con, index) in contact.interests"
+                        class="text-base px-2 py-1 rounded md:text-lg"
+                        :class="classes[index % classes.length]"
+                      >
+                        {{ con }}
+                      </span>
                     </div>
                   </td>
 
-                  <!-- Status Column -->
-                  <td class="p-0">
-                    <span
-                      class="text-base capitalize md:text-lg"
-                      :class="[
-                        'badge',
-                        row.status === 'approved'
-                          ? 'badge-success'
-                          : row.status === 'rejected'
-                            ? 'badge-danger'
-                            : 'badge-warning',
-                      ]"
-                      >{{ row.status }}</span
-                    >
-                  </td>
-
-                  <!-- Address Column -->
-                  <td class="p-0">
-                    <span
-                      :class="[
-                        `badge md:text-lg text-base py-1  text-ellipsis max-w-40`,
-                        locale === 'en' ? '' : 'text-end',
-                      ]"
-                      >{{ row.address ? row.address : "no address" }}</span
-                    >
-                  </td>
-
+                  <!-- View Button Column -->
                   <td class="text-end p-0">
                     <router-link
-                      :to="`/apps/homelesses/homeless/${row.id}`"
+                      :to="`/apps/contacts/${contact.id}`"
                       class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px"
                     >
                       <KTIcon
@@ -91,8 +100,12 @@
                 </tr>
               </template>
             </template>
-            <template v-else class="w-full h-full">
-              {{ $t("noData") }}
+            <template v-else>
+              <tr>
+                <td colspan="5" class="text-center py-6">
+                  {{ $t("noData") }}
+                </td>
+              </tr>
             </template>
           </tbody>
           <!--end::Table body-->
@@ -103,24 +116,24 @@
     <!--end: Card Body-->
   </div>
 </template>
-
 <script setup>
+const classes = ref([
+  "bg-red-500",
+  "bg-green-400",
+  "bg-yellow-400",
+  "bg-blue-400",
+  "bg-black",
+]);
+import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 const { locale } = useI18n();
 
 defineProps({
   className: { type: String, required: false },
-  workshops: { required: false },
+  contacts: {
+    type: Array,
+    required: true,
+    default: () => [],
+  },
 });
 </script>
-
-<style scoped>
-/* Custom styles to remove extra padding */
-td.p-0 {
-  padding: 0 !important;
-}
-
-.badge {
-  padding: 0.25rem 0.5rem; /* Adjust badge padding as needed */
-}
-</style>

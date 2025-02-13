@@ -1,26 +1,46 @@
 <template>
   <!--  -->
-  <div>
+  <div v-if="!isFetching">
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 xl:gap-10 mb-5 xl:mb-10">
       <!-- Card 2 -->
-      <Widget11
+      <!-- <Widget11
         :usersCount="dataVal.homelesses_count"
         :usersVerifiedCount="dataVal.homelesses_approved"
         :description="$t('produtcs')"
         tanslated="approved"
         bgColor="#430f58"
         className="h-full"
-      />
+      /> -->
       <Widget1
-        :usersCount="565"
+        :usersCount="dataVal.clientsCount"
         :usersVerifiedCount="dataVal.categories_count"
         :description="$t('clients')"
         bgColor="#F1416C"
         :bgImage="getAssetPath('media/patterns/vector-1.png')"
         className="h-full pb-24"
       />
+      <Widget113
+        :usersCount="dataVal.productsCount"
+        :usersVerifiedCount="7564"
+        :description="$t('produtcs')"
+        bgColor="bg-[#430f58]"
+        className="h-full"
+      />
+      <!-- Card 7 -->
+      <Widget114
+        :usersCount="dataVal.partnersCount"
+        :usersVerifiedCount="dataVal.usersVerifiedCount"
+        :description="$t('allPartners')"
+        className="h-full pb-24"
+      />
+      <!-- Card 8 -->
+      <Widget115
+        :usersCount="dataVal.contactsCount"
+        :description="$t('allContacts')"
+        className="h-full pb-24"
+      />
     </div>
-    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+    <!-- <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
       <div class="w-full">
         <WidgetMoney
           :data="dataVal.homelesses"
@@ -28,27 +48,30 @@
           :height="300"
         />
       </div>
-    </div>
+    </div> -->
 
     <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
       <div class="w-full">
         <Widget10
-          v-if="dataVal.homelesses_list.length"
-          :workshops="dataVal.homelesses_list"
+          v-if="dataVal?.contacts?.length"
+          :contacts="dataVal.contacts"
           className="h-md-100"
         />
       </div>
     </div>
   </div>
-  <!-- <div v-else class="w-full h-screen grid place-items-center">
+  <div v-else class="w-full h-screen grid place-items-center">
     <span class="loader"></span>
-  </div> -->
+  </div>
 </template>
 
 <script setup>
 import Widget1 from "@/components/dashboard-default-widgets/Widget1.vue";
 import Widget11 from "@/components/dashboard-default-widgets/Widget1Progress.vue";
-
+import Widget113 from "@/components/dashboard-default-widgets/Widget113.vue";
+import Widget114 from "@/components/dashboard-default-widgets/Widget114.vue";
+import Widget115 from "@/components/dashboard-default-widgets/Widget115.vue";
+import Widget116 from "@/components/dashboard-default-widgets/Widget116.vue";
 import WidgetMoney from "@/components/dashboard-default-widgets/WidgetMoney.vue";
 import Widget10 from "@/components/dashboard-default-widgets/Widget10.vue";
 import Widget1010 from "@/components/dashboard-default-widgets/Widget1010.vue";
@@ -86,7 +109,7 @@ const fetching = async () => {
         method: "GET",
         headers: {
           "X-localization": locale.value,
-          Authorization: `Bearer ${authToken}`,
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
       },
     ).json();
