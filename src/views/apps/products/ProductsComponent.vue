@@ -222,13 +222,13 @@ const tableHeader = ref([
     columnName: "categories",
     columnLabel: "categories",
     sortEnabled: false,
-    columnWidth: 180,
+    columnWidth: 250,
   },
   {
     columnName: "actions",
     columnLabel: "actions",
     sortEnabled: false,
-    columnWidth: 100,
+    columnWidth: 150,
   },
 ]);
 

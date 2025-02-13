@@ -2,6 +2,12 @@ import { createI18n } from "vue-i18n";
 
 const messages = {
   en: {
+    allPartners: "All Partners",
+    allContacts: "All Contacts",
+    interests: "Interests",
+    "phone-sa": "Phone (Saudi Arabia)",
+    "phone-eg": "Phone (Egypt)",
+    x: "X",
     searchCategories: "Search Categories",
     addCategory: "Add Category",
     update: "Update",
@@ -656,6 +662,12 @@ const messages = {
     serviceDetails: "Service Details",
   },
   ar: {
+    allPartners: "All Partners",
+    allContacts: "All Contacts",
+    interests: "Interests",
+    "phone-sa": "Phone (Saudi Arabia)",
+    "phone-eg": "Phone (Egypt)",
+    x: "X",
     searchCategories: "بحث في الفئات",
     addCategory: "إضافة فئة",
     update: "تحديث",
