@@ -86,15 +86,21 @@
           />
         </template>
         <!-- Country Column -->
-        <template v-slot:country="{ row: product }">{{
+        <!-- <template v-slot:country="{ row: product }">{{
           product.country
-        }}</template>
+        }}</template> -->
         <!-- Categories Column -->
         <template v-slot:categories="{ row: product }">
-          <span v-for="(category, index) in product.categories" :key="index">
-            {{ category
-            }}{{ index < product.categories.length - 1 ? ", " : "" }}
-          </span>
+          <div class="flex gap-1 items-center">
+            <span
+              :class="classes[index % classes.length]"
+              class="rounded-md px-2 py-1 text-white"
+              v-for="(cat, index) in product.category"
+              :key="index"
+            >
+              {{ cat.name[locale] }}
+            </span>
+          </div>
         </template>
         <!-- Actions Column -->
         <template v-slot:actions="{ row: product }">
@@ -132,6 +138,13 @@
   </div>
 </template>
 <script setup>
+const classes = ref([
+  "bg-red-500",
+  "bg-green-400",
+  "bg-yellow-400",
+  "bg-blue-400",
+  "bg-black",
+]);
 import { ref, watch, onMounted } from "vue";
 import { Dropdown } from "bootstrap";
 import { useI18n } from "vue-i18n";
@@ -187,7 +200,7 @@ const tableHeader = ref([
   { columnName: "name", columnLabel: "name", sortEnabled: true },
   { columnName: "image", columnLabel: "im", sortEnabled: false },
   { columnName: "description", columnLabel: "description", sortEnabled: true },
-  { columnName: "country", columnLabel: "country", sortEnabled: true },
+  // { columnName: "country", columnLabel: "country", sortEnabled: true },
   { columnName: "categories", columnLabel: "categories", sortEnabled: false },
   { columnName: "actions", columnLabel: "actions", sortEnabled: false },
 ]);
@@ -271,17 +284,23 @@ const deleteSelectedProducts = async () => {
     });
 
     if (result.isConfirmed) {
-      await useFetch(
-        `${import.meta.env.VITE_APP_API_URL_MEGATRON}/products/delete-selected`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      // Loop through each selected ID and send a DELETE request
+      for (const id of selectedIds.value) {
+        await useFetch(
+          `${import.meta.env.VITE_APP_API_URL_MEGATRON}/products/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
           },
-          body: JSON.stringify({ ids: selectedIds.value }),
-        },
-      );
+        );
+      }
+
+      // Refresh the product list after deletion
       await fetching(1);
+      selectedIds.value = []; // Clear selected items
+
       Swal.fire(
         "Deleted!",
         "The selected products have been deleted.",

@@ -93,7 +93,7 @@
         </div>
 
         <!-- Country -->
-        <div class="fv-row mb-10">
+        <!-- <div class="fv-row mb-10">
           <label class="form-label fs-6 fw-bold text-gray-900">{{
             $t("country")
           }}</label>
@@ -104,7 +104,7 @@
               autocomplete="off"
             />
           </el-form-item>
-        </div>
+        </div> -->
       </div>
 
       <div class="modal-footer flex-center">
@@ -172,7 +172,7 @@ const formData = ref({
   descriptions: {},
   categories: [],
   imageFile: [],
-  country: "",
+  // country: "",
 });
 
 const categories = ref(["Electronics", "Clothing", "Toys", "Books", "Sports"]);
@@ -200,9 +200,9 @@ const rules = ref({
       },
     ]),
   ),
-  country: [
-    { required: true, message: "Country is required", trigger: "blur" },
-  ],
+  // country: [
+  //   { required: true, message: "Country is required", trigger: "blur" },
+  // ],
   imageFile: [
     { required: true, message: "Product Image is required", trigger: "change" },
   ],
@@ -215,7 +215,7 @@ const resetForm = () => {
     descriptions: {},
     categories: [],
     imageFile: [],
-    country: "",
+    // country: "",
   };
 };
 
@@ -228,7 +228,7 @@ const onSubmit = () => {
     try {
       // Create a new FormData object
       const payload = new FormData();
-      payload.append("country", formData.value.country);
+      // payload.append("country", formData.value.country);
       payload.append("categories", formData.value.categories.join(","));
 
       // Add names and descriptions

@@ -295,6 +295,21 @@ const MainMenuConfig: Array<MenuItem> = [
           },
         ],
       },
+      {
+        sectionTitle: "categories",
+        route: "/categories",
+        keenthemesIcon: "abstract-16",
+        sub: [
+          {
+            heading: "categories",
+            route: "/apps/categories",
+          },
+          {
+            heading: "addCategories",
+            route: "/apps/categories/add",
+          },
+        ],
+      },
     ],
   },
 ];

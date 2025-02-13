@@ -10,18 +10,18 @@
         "
         alt="Logo"
         :src="getAssetPath('logo.webp')"
-        class="w-50px mx-auto app-sidebar-logo-default"
+        class="w-40px mx-auto app-sidebar-logo-default"
       />
       <img
         v-if="themeMode === 'light' && layout === 'light-sidebar'"
         alt="Logo"
         :src="getAssetPath('logo.webp')"
-        class="w-50px mx-auto app-sidebar-logo-default"
+        class="w-40px mx-auto app-sidebar-logo-default"
       />
       <img
         alt="Logo"
         :src="getAssetPath('logo.webp')"
-        class="w-50px mx-auto app-sidebar-logo-minimize"
+        class="w-40px mx-auto app-sidebar-logo-minimize"
       />
     </router-link>
     <!--end::Logo image-->

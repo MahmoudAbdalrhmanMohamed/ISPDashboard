@@ -60,7 +60,7 @@
             <img
               alt="Logo"
               :src="getAssetPath('logo.webp')"
-              class="w-40px"
+              class="w-30px"
             />
           </router-link>
         </div>

@@ -61,10 +61,10 @@
               class="w-full"
             >
               <el-option
-                v-for="category in categories"
+                v-for="category in dataVal"
                 :key="category"
-                :label="category"
-                :value="category"
+                :label="category.name[locale]"
+                :value="category.id"
               />
             </el-select>
           </el-form-item>
@@ -93,7 +93,7 @@
         </div>
 
         <!-- Country -->
-        <div class="fv-row mb-10">
+        <!-- <div class="fv-row mb-10">
           <label class="form-label fs-6 fw-bold text-gray-900">{{
             $t("country")
           }}</label>
@@ -104,7 +104,7 @@
               autocomplete="off"
             />
           </el-form-item>
-        </div>
+        </div> -->
       </div>
 
       <button
@@ -136,6 +136,9 @@ import { ref } from "vue";
 import Swal from "sweetalert2";
 import { useFetch } from "@vueuse/core";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+
+const { locale } = useI18n();
 
 const formRef = ref(null);
 const dialogImageUrl = ref(null);
@@ -162,7 +165,7 @@ const formData = ref({
   descriptions: {},
   categories: [],
   imageFile: [],
-  country: "",
+  // country: "",
 });
 
 const categories = ref(["Electronics", "Clothing", "Toys", "Books", "Sports"]);
@@ -190,13 +193,55 @@ const rules = ref({
       },
     ]),
   ),
-  country: [
-    { required: true, message: "Country is required", trigger: "blur" },
-  ],
+  // country: [
+  //   { required: true, message: "Country is required", trigger: "blur" },
+  // ],
   imageFile: [
     { required: true, message: "Product Image is required", trigger: "change" },
   ],
 });
+
+const dataVal = ref([]);
+
+const fetching = async () => {
+  let page = 1;
+  let allCategories = [];
+  let hasMorePages = true;
+
+  while (hasMorePages) {
+    const { data } = await useFetch(
+      `${import.meta.env.VITE_APP_API_URL_NEW}/categories?page=${page}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      },
+    ).json();
+
+    if (data.value && data.value.data && Array.isArray(data.value.data.data)) {
+      // console.log("Fetched data:", data.value.data.data); // Debugging output
+
+      allCategories = [...allCategories, ...data.value.data.data];
+
+      if (
+        data.value.data.meta.current_page >= data.value.data.meta.total_pages
+      ) {
+        hasMorePages = false;
+      } else {
+        page++;
+      }
+    } else {
+      console.error("Invalid response format:", data.value);
+      hasMorePages = false; // Stop if the structure is not as expected
+    }
+  }
+
+  dataVal.value = [...allCategories];
+};
+
+fetching();
+
+
 
 const resetForm = () => {
   formRef.value?.resetFields();
@@ -205,7 +250,7 @@ const resetForm = () => {
     descriptions: {},
     categories: [],
     imageFile: [],
-    country: "",
+    // country: "",
   };
 };
 
@@ -218,8 +263,8 @@ const onSubmit = () => {
     try {
       // Create a new FormData object
       const payload = new FormData();
-      payload.append("country", formData.value.country);
-      payload.append("categories", formData.value.categories.join(","));
+      // payload.append("country", formData.value.country);
+      payload.append("categories[]", formData.value.categories);
 
       // Add names and descriptions
       languages.forEach((lang) => {

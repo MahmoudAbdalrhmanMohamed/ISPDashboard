@@ -75,7 +75,7 @@
     </div>
     <router-link
       to="/"
-      class="mb-0 mb-lg-12 d-flex justify-center dark:bg-black/50 d-lg-none"
+      class="py-12 d-flex justify-center dark:bg-black/50 d-lg-none"
     >
       <img
         alt="Logo"

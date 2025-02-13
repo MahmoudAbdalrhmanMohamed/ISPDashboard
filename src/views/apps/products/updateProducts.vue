@@ -6,7 +6,8 @@
       :rules="rules"
       @submit.prevent="onSubmit"
     >
-      <div class="modal-body py-10 px-lg-17">
+      <div class="modal-body py-10">
+        <!-- Loop through languages for multi-language fields -->
         <div v-for="lang in languages" :key="lang.code" class="mb-10">
           <h2 class="text-2xl capitalize font-bold text-gray-800">
             {{ $t(lang.lang) }}
@@ -18,7 +19,10 @@
               $t("productName")
             }}</label>
             <el-form-item :prop="`names.${lang.code}`">
-              <el-input v-model="formData.names[lang.code]" />
+              <el-input
+                v-model="formData.names[lang.code]"
+                autocomplete="off"
+              />
             </el-form-item>
           </div>
 
@@ -32,6 +36,10 @@
                 type="textarea"
                 :rows="4"
               />
+              <small class="text-gray-500"
+                >{{ formData.descriptions[lang.code]?.length || 0 }}/50
+                characters</small
+              >
             </el-form-item>
           </div>
         </div>
@@ -41,12 +49,17 @@
             $t("productCategories")
           }}</label>
           <el-form-item prop="categories">
-            <el-select v-model="formData.categories" multiple>
+            <el-select
+              v-model="formData.categories"
+              multiple
+              placeholder="Select Categories"
+              class="w-full"
+            >
               <el-option
-                v-for="category in categories"
-                :key="category"
-                :label="category"
-                :value="category"
+                v-for="category in dataVal"
+                :key="category.id"
+                :label="category.name[locale]"
+                :value="category.id"
               />
             </el-select>
           </el-form-item>
@@ -54,99 +67,248 @@
 
         <div class="fv-row mb-10">
           <label class="form-label fs-6 fw-bold text-gray-900">{{
-            $t("country")
+            $t("productImage")
           }}</label>
-          <el-form-item prop="country">
-            <el-input v-model="formData.country" />
+          <el-form-item prop="imageFile">
+            <el-upload
+              v-model:file-list="imageFileList"
+              class="upload-demo"
+              :limit="1"
+              :auto-upload="false"
+              accept=".jpg,.png"
+              list-type="picture-card"
+              :on-change="handleImageChange"
+              :on-remove="handleRemove"
+              :on-preview="handlePreview"
+            >
+              <el-button type="primary">{{ $t("uploadImage") }}</el-button>
+            </el-upload>
           </el-form-item>
         </div>
       </div>
 
-      <button class="btn w-full text-center btn-lg btn-primary" type="submit">
-        {{ $t("updateProduct") }}
+      <button
+        class="btn btn-lg btn-primary flex justify-center w-full text-center items-center"
+        :data-kt-indicator="loading ? 'on' : null"
+        type="submit"
+      >
+        <span v-if="!loading">{{ $t("updateProduct") }}</span>
+        <span v-if="loading" class="indicator-progress"
+          >{{ $t("pleaseWait")
+          }}<span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span
+        ></span>
       </button>
     </el-form>
+
+    <el-dialog v-model="dialogVisible">
+      <img w-full :src="dialogImageUrl" alt="Preview Image" />
+    </el-dialog>
+  </div>
+
+  <div v-else class="w-screen h-screen grid place-items-center">
+    <span class="loader"></span>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useRouter, useRoute } from "vue-router";
 import Swal from "sweetalert2";
+import { useFetch } from "@vueuse/core";
+import { useRouter, useRoute } from "vue-router";
+import { useI18n } from "vue-i18n";
 
-const formRef = ref(null);
+const { locale } = useI18n();
 const router = useRouter();
 const route = useRoute();
+const formRef = ref(null);
+const dialogImageUrl = ref(null);
+const dialogVisible = ref(false);
 const loading = ref(false);
-const productId = route.params.product;
+const imageFileList = ref([]);
 
 const languages = [
   { lang: "arabic", code: "ar" },
   { lang: "english", code: "en" },
 ];
-const categories = ref(["Electronics", "Clothing", "Toys", "Books", "Sports"]);
 
 const formData = ref({
   names: {},
   descriptions: {},
   categories: [],
-  country: "",
+  imageFile: null,
 });
 
 const rules = ref({
-  names: {},
-  descriptions: {},
-  country: [
-    { required: true, message: "Country is required", trigger: "blur" },
+  names: Object.fromEntries(
+    languages.map(({ code }) => [
+      code,
+      {
+        required: true,
+        message: `${code} Product Name is required`,
+        min: 4,
+        trigger: "blur",
+      },
+    ]),
+  ),
+  descriptions: Object.fromEntries(
+    languages.map(({ code }) => [
+      code,
+      {
+        required: true,
+        min: 50,
+        message: `${code} Description must be at least 50 characters`,
+        trigger: "blur",
+      },
+    ]),
+  ),
+  categories: [
+    {
+      required: true,
+      message: "Please select at least one category",
+      trigger: "change",
+    },
+  ],
+  imageFile: [
+    { required: true, message: "Product Image is required", trigger: "change" },
   ],
 });
 
-onMounted(async () => {
-  loading.value = true;
-  try {
-    const response = await fetch(
-      `${import.meta.env.VITE_APP_API_URL_NEW}/products/${productId}`,
-    );
-    const data = await response.json();
-    if (response.ok) {
-      formData.value = {
-        names: data.names,
-        descriptions: data.descriptions,
-        categories: data.categories,
-        country: data.country,
-      };
+const dataVal = ref([]);
+
+const fetching = async () => {
+  let page = 1;
+  let allCategories = [];
+  let hasMorePages = true;
+
+  while (hasMorePages) {
+    const { data } = await useFetch(
+      `${import.meta.env.VITE_APP_API_URL_NEW}/categories?page=${page}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      },
+    ).json();
+
+    if (data.value && data.value.data && Array.isArray(data.value.data.data)) {
+      allCategories = [...allCategories, ...data.value.data.data];
+
+      if (
+        data.value.data.meta.current_page >= data.value.data.meta.total_pages
+      ) {
+        hasMorePages = false;
+      } else {
+        page++;
+      }
     } else {
-      throw new Error("Failed to fetch product");
+      console.error("Invalid response format:", data.value);
+      hasMorePages = false;
     }
-  } catch (error) {
-    Swal.fire({ text: error.message, icon: "error" });
-  } finally {
-    loading.value = false;
   }
-});
+
+  dataVal.value = [...allCategories];
+};
+
+fetching();
+
+const fetchingV2 = async () => {
+  const { data } = await useFetch(
+    `${import.meta.env.VITE_APP_API_URL_NEW}/products/${route.params.product}`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    },
+  ).json();
+
+  if (data.value && data.value.data) {
+    const productData = data.value.data;
+
+    // Populate formData with fetched product data
+    languages.forEach(({ code }) => {
+      formData.value.names[code] = productData.name[code];
+      formData.value.descriptions[code] = productData.description[code];
+    });
+
+    formData.value.categories = productData.category.map((cat) => cat.id);
+
+    if (productData.image) {
+      imageFileList.value = [
+        {
+          name: "product_image",
+          url: productData.image,
+        },
+      ];
+    }
+  }
+};
+
+fetchingV2();
 
 const onSubmit = async () => {
-  try {
+  formRef.value.validate(async (valid) => {
+    if (!valid) return;
     loading.value = true;
-    const response = await fetch(
-      `${import.meta.env.VITE_APP_API_URL_NEW}/products/${productId}`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData.value),
-      },
-    );
-
-    if (response.ok) {
-      Swal.fire({ text: "Product updated successfully!", icon: "success" });
-      router.push({ name: "apps-products-all" });
-    } else {
-      throw new Error("Update failed");
+    try {
+      const payload = new FormData();
+      formData.value.categories.forEach((cat) =>
+        payload.append("categories[]", cat),
+      );
+      languages.forEach(({ code }) => {
+        payload.append(`name[${code}]`, formData.value.names[code]);
+        payload.append(
+          `description[${code}]`,
+          formData.value.descriptions[code],
+        );
+      });
+      if (imageFileList.value.length) {
+        payload.append("image_file", imageFileList.value[0].raw);
+      }
+      const response = await fetch(
+        `${import.meta.env.VITE_APP_API_URL_NEW}/products/${route.params.product}?_method=PUT`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+          body: payload,
+        },
+      );
+      const data = await response.json();
+      loading.value = false;
+      if (response.ok && data?.status) {
+        Swal.fire({
+          text: "Product updated successfully!",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+        router.push({ name: "apps-products-all" });
+      } else {
+        throw new Error(data.message || "Failed to update product.");
+      }
+    } catch (error) {
+      loading.value = false;
+      Swal.fire({
+        text: error.message || "Something went wrong!",
+        icon: "error",
+        confirmButtonText: "Retry",
+      });
     }
-  } catch (error) {
-    Swal.fire({ text: error.message, icon: "error" });
-  } finally {
-    loading.value = false;
-  }
+  });
+};
+
+const handleImageChange = (file) => {
+  imageFileList.value = [file];
+};
+
+const handleRemove = () => {
+  imageFileList.value = [];
+};
+
+const handlePreview = (uploadFile) => {
+  dialogImageUrl.value = uploadFile.url;
+  dialogVisible.value = true;
 };
 </script>

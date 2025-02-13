@@ -424,6 +424,7 @@ const routes: Array<RouteRecordRaw> = [
           breadcrumbs: ["Apps", "products", "updateProduct"],
         },
       },
+
       {
         path: "/apps/gallery/all",
         name: "apps-gallery-all",
@@ -460,32 +461,61 @@ const routes: Array<RouteRecordRaw> = [
           breadcrumbs: ["Apps", "gallery", "update"],
         },
       },
+
       {
-        path: "/apps/paterners",
-        name: "apps-parteners",
+        path: "/apps/gallery",
+        name: "apps-gallery",
+        component: () => import("@/views/apps/gallery/GalleryComponent.vue"),
+        meta: {
+          pageTitle: "gallery",
+          breadcrumbs: ["Apps", "gallery"],
+        },
+      },
+      {
+        path: "/apps/gallery/add",
+        name: "apps-gallery-add",
+        component: () => import("@/views/apps/gallery/addGallery.vue"),
+        meta: {
+          pageTitle: "gallery",
+          breadcrumbs: ["Apps", "gallery", "add"],
+        },
+      },
+      {
+        path: "/apps/gallery/update/:gallery",
+        name: "apps-gallery-update",
+        component: () => import("@/views/apps/gallery/updateGallery.vue"),
+        meta: {
+          pageTitle: "gallery",
+          breadcrumbs: ["Apps", "gallery", "update"],
+        },
+      },
+
+      {
+        path: "/apps/categories",
+        name: "apps-categories",
         component: () =>
-          import("@/views/apps/parteners/PaternersComponent.vue"),
+          import("@/views/apps/categories/CategoriesComponent.vue"),
         meta: {
-          pageTitle: "parteners",
-          breadcrumbs: ["Apps", "parteners"],
+          pageTitle: "categories",
+          breadcrumbs: ["Apps", "categories"],
         },
       },
       {
-        path: "/apps/parteners/add",
-        name: "apps-parteners-add",
-        component: () => import("@/views/apps/parteners/addPaterner.vue"),
+        path: "/apps/categories/add",
+        name: "apps-categories-add",
+        component: () => import("@/views/apps/categories/addCategories.vue"),
         meta: {
-          pageTitle: "parteners",
-          breadcrumbs: ["Apps", "parteners", "add"],
+          pageTitle: "categories",
+          breadcrumbs: ["Apps", "categories", "add"],
         },
       },
       {
-        path: "/apps/parteners/update/:parteners",
-        name: "apps-parteners-update",
-        component: () => import("@/views/apps/parteners/updatePaterner.vue"),
+        path: "/apps/categories/update/:id",
+        name: "apps-categories-update",
+        component: () => import("@/views/apps/categories/updateCategories.vue"),
         meta: {
-          pageTitle: "parteners",
-          breadcrumbs: ["Apps", "parteners", "update"],
+          pageTitle: "categories",
+          breadcrumbs: ["Apps", "categories", "update"],
         },
       },
       {
