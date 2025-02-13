@@ -12,175 +12,9 @@ const MainMenuConfig: Array<MenuItem> = [
     ],
   },
   {
-    heading: "apps",
-    route: "/apps",
+    heading: "products",
+    route: "/products",
     pages: [
-      // {
-      //   sectionTitle: "Publishers",
-      //   route: "/publishers",
-      //   keenthemesIcon: "technology-3",
-      //   bootstrapIcon: "bi-printer",
-      //   sub: [
-      //     {
-      //       heading: "Publishers",
-      //       route: "/apps/publishers/all",
-      //     },
-      //     {
-      //       heading: "Add Publisher",
-      //       route: "/apps/publishers/addPublisher",
-      //     },
-      //   ],
-      // },
-
-      // {
-      //   sectionTitle: "Artists",
-      //   route: "/artists",
-      //   keenthemesIcon: "abstract-38",
-      //   bootstrapIcon: "bi-printer",
-      //   sub: [
-      //     {
-      //       heading: "Artists",
-      //       route: "/apps/artists/all",
-      //     },
-      //     {
-      //       heading: "Add Artist",
-      //       route: "/apps/artists/addArtist",
-      //     },
-      //   ],
-      // },
-
-      // {
-      //   sectionTitle: "Writers",
-      //   route: "/writers",
-      //   keenthemesIcon: "chart",
-      //   bootstrapIcon: "bi-printer",
-      //   sub: [
-      //     {
-      //       heading: "Writers",
-      //       route: "/apps/writers/all",
-      //     },
-      //     {
-      //       heading: "Add Writer",
-      //       route: "/apps/writers/addWriter",
-      //     },
-      //   ],
-      // },
-
-      // {
-      //   sectionTitle: "Genres",
-      //   route: "/genres",
-      //   keenthemesIcon: "graph-up",
-      //   bootstrapIcon: "bi-printer",
-      //   sub: [
-      //     {
-      //       heading: "Genres",
-      //       route: "/apps/genres/all",
-      //     },
-      //     {
-      //       heading: "Add Genre",
-      //       route: "/apps/genres/addGenre",
-      //     },
-      //   ],
-      // },
-
-      // {
-      //   sectionTitle: "Chapters",
-      //   route: "/chapters",
-      //   keenthemesIcon: "book",
-      //   bootstrapIcon: "bi-journal-text",
-      //   sub: [
-      //     {
-      //       heading: "All Chapters",
-      //       route: "/apps/chapters/all",
-      //     },
-      //     {
-      //       heading: "Add One Chapter",
-      //       route: "/apps/chapters/addOneChapter",
-      //     },
-      //     {
-      //       heading: "Add All Chapters",
-      //       route: "/apps/chapters/addAllChapter",
-      //     },
-      //     // {
-      //     //   heading: "Add Url",
-      //     //   route: "/apps/chapters/addUrl",
-      //     // },
-      //     // {
-      //     //   heading: "Add Zip",
-      //     //   route: "/apps/chapters/addZip",
-      //     // },
-      //     // {
-      //     //   heading: "updateOneChapter",
-      //     //   route: "/apps/chapters/updateOneChapter/:updateChapter",
-      //     // },
-      //     // {
-      //     //   heading: "updateAllChapters",
-      //     //   route: "/apps/chapters/updateAllChapter/:updateChapter",
-      //     // },
-      //     // {
-      //     //   heading: "updateUrl",
-      //     //   route: "/apps/chapters/updateUrl/:updateUrl",
-      //     // },
-      //     // {
-      //     //   heading: "updateZip",
-      //     //   route: "/apps/chapters/updateZip/:updateZip",
-      //     // },
-      //   ],
-      // },
-
-      // {
-      //   sectionTitle: "Comics",
-      //   route: "/comics",
-      //   bootstrapIcon: "bi-book",
-      //   keenthemesIcon: "soft",
-      //   sub: [
-      //     {
-      //       heading: "Comics",
-      //       route: "/apps/comics/all",
-      //     },
-      //     {
-      //       heading: "Add Comic",
-      //       route: "/apps/comics/addComic",
-      //     },
-      //   ],
-      // },
-
-      // {
-      //   sectionTitle: "Translators",
-      //   route: "/translators",
-      //   keenthemesIcon: "abstract-20",
-      //   sub: [
-      //     {
-      //       heading: "Translators",
-      //       route: "/apps/translators/Translators",
-      //     },
-      //     {
-      //       heading: "Translate Requests Comics",
-      //       route: "/apps/translators/comic",
-      //     },
-      //     {
-      //       heading: "Translate Requests Chapters",
-      //       route: "/apps/translators/chapter",
-      //     },
-      //     {
-      //       heading: "Translate Requests To Join",
-      //       route: "/apps/translators/RequestToJoin",
-      //     },
-      //   ],
-      // },
-
-      // {
-      //   sectionTitle: "Users",
-      //   route: "/users",
-      //   keenthemesIcon: "abstract-45",
-      //   sub: [
-      //     {
-      //       heading: "Users",
-      //       route: "/apps/users",
-      //     },
-      //   ],
-      // },
-
       {
         sectionTitle: "products",
         route: "/products",
@@ -197,14 +31,31 @@ const MainMenuConfig: Array<MenuItem> = [
         ],
       },
       {
+        sectionTitle: "categories",
+        route: "/categories",
+        keenthemesIcon: "abstract-16",
+        sub: [
+          {
+            heading: "categories",
+            route: "/apps/categories",
+          },
+          {
+            heading: "addCategories",
+            route: "/apps/categories/add",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    heading: "Images",
+    route: "/Images",
+    pages: [
+      {
         sectionTitle: "gallery",
         route: "/gallery",
         keenthemesIcon: "abstract-20",
         sub: [
-          // {
-          //   heading: "galleryTest",
-          //   route: "/apps/gallery/all",
-          // },
           {
             heading: "gallery",
             route: "/apps/gallery",
@@ -212,29 +63,6 @@ const MainMenuConfig: Array<MenuItem> = [
           {
             heading: "addGallery",
             route: "/apps/gallery/add",
-          },
-        ],
-      },
-      {
-        sectionTitle: "contacts",
-        route: "/contacts",
-        keenthemesIcon: "abstract-38",
-        bootstrapIcon: "bi-printer",
-        sub: [
-          {
-            heading: "contacts",
-            route: "/apps/contacts",
-          },
-        ],
-      },
-      {
-        sectionTitle: "invests",
-        route: "/invests",
-        keenthemesIcon: "abstract-42",
-        sub: [
-          {
-            heading: "invests",
-            route: "/apps/invests",
           },
         ],
       },
@@ -269,17 +97,41 @@ const MainMenuConfig: Array<MenuItem> = [
           },
         ],
       },
+    ],
+  },
+  {
+    heading: "Forms",
+    route: "/Forms",
+    pages: [
       {
-        sectionTitle: "settings",
-        route: "/settings",
-        keenthemesIcon: "abstract-15",
+        sectionTitle: "contacts",
+        route: "/contacts",
+        keenthemesIcon: "abstract-38",
+        bootstrapIcon: "bi-printer",
         sub: [
           {
-            heading: "settings",
-            route: "/apps/website/settings",
+            heading: "contacts",
+            route: "/apps/contacts",
           },
         ],
       },
+      {
+        sectionTitle: "invests",
+        route: "/invests",
+        keenthemesIcon: "abstract-42",
+        sub: [
+          {
+            heading: "invests",
+            route: "/apps/invests",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    heading: "Careers",
+    route: "/careers",
+    pages: [
       {
         sectionTitle: "careers",
         route: "/careers",
@@ -291,33 +143,20 @@ const MainMenuConfig: Array<MenuItem> = [
           },
         ],
       },
-      // {
-      //   sectionTitle: "team",
-      //   route: "/team",
-      //   keenthemesIcon: "abstract-18",
-      //   sub: [
-      //     {
-      //       heading: "team",
-      //       route: "/apps/team",
-      //     },
-      //     {
-      //       heading: "addMember",
-      //       route: "/apps/team/add",
-      //     },
-      //   ],
-      // },
+    ],
+  },
+  {
+    heading: "settings",
+    route: "/settings",
+    pages: [
       {
-        sectionTitle: "categories",
-        route: "/categories",
-        keenthemesIcon: "abstract-16",
+        sectionTitle: "settings",
+        route: "/settings",
+        keenthemesIcon: "abstract-15",
         sub: [
           {
-            heading: "categories",
-            route: "/apps/categories",
-          },
-          {
-            heading: "addCategories",
-            route: "/apps/categories/add",
+            heading: "settings",
+            route: "/apps/website/settings",
           },
         ],
       },
