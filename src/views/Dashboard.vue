@@ -1,7 +1,9 @@
 <template>
   <!--  -->
   <div v-if="!isFetching">
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 xl:gap-10 mb-5 xl:mb-10">
+    <div
+      class="grid grid-rows-4 sm:grid-rows-2 grid-cols-1 sm:grid-cols-2 gap-5 xl:gap-10 mb-5 xl:mb-10"
+    >
       <!-- Card 2 -->
       <!-- <Widget11
         :usersCount="dataVal.homelesses_count"
@@ -17,7 +19,7 @@
         :description="$t('clients')"
         bgColor="#F1416C"
         :bgImage="getAssetPath('media/patterns/vector-1.png')"
-        className="h-full pb-24"
+        className="h-full"
       />
       <Widget113
         :usersCount="dataVal.productsCount"
@@ -31,7 +33,7 @@
         :usersCount="dataVal.partnersCount"
         :usersVerifiedCount="dataVal.usersVerifiedCount"
         :description="$t('allPartners')"
-        className="h-full pb-24"
+        className="h-full"
       />
       <!-- Card 8 -->
       <Widget115
@@ -118,15 +120,15 @@ const fetching = async () => {
       dataVal.value = response.data.value.data;
     } else if (response?.data.value?.message === "Unauthenticated") {
       console.warn("Unauthenticated, clearing token and redirecting.");
-      // localStorage.removeItem("authToken");
-      // router.replace({ name: "sign-in" });
+      localStorage.removeItem("authToken");
+      router.replace({ name: "sign-in" });
     } else {
       throw new Error(response?.data.value?.message);
     }
   } catch (error) {
     console.error("Error:", error.message);
-    // localStorage.removeItem("authToken");
-    // router.replace({ name: "sign-in" });
+    localStorage.removeItem("authToken");
+    router.replace({ name: "sign-in" });
   } finally {
     loading.value = false;
     isFetching.value = false;
