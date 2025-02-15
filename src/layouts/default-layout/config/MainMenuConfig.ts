@@ -32,7 +32,7 @@ const MainMenuConfig: Array<MenuItem> = [
       },
       {
         sectionTitle: "categories",
-        route: "/categories",
+        route: "/products",
         keenthemesIcon: "abstract-16",
         sub: [
           {
@@ -49,7 +49,7 @@ const MainMenuConfig: Array<MenuItem> = [
   },
   {
     heading: "Images",
-    route: "/Images",
+    route: "/gallery",
     pages: [
       {
         sectionTitle: "gallery",
@@ -68,7 +68,7 @@ const MainMenuConfig: Array<MenuItem> = [
       },
       {
         sectionTitle: "clients",
-        route: "/clients",
+        route: "/Images",
         keenthemesIcon: "abstract-19",
         sub: [
           {
@@ -83,7 +83,7 @@ const MainMenuConfig: Array<MenuItem> = [
       },
       {
         sectionTitle: "paterners",
-        route: "/paterners",
+        route: "/Images",
         keenthemesIcon: "chart",
         bootstrapIcon: "bi-printer",
         sub: [
@@ -101,11 +101,11 @@ const MainMenuConfig: Array<MenuItem> = [
   },
   {
     heading: "Forms",
-    route: "/Forms",
+    route: "/invests",
     pages: [
       {
         sectionTitle: "contacts",
-        route: "/contacts",
+        route: "/invests",
         keenthemesIcon: "abstract-38",
         bootstrapIcon: "bi-printer",
         sub: [
