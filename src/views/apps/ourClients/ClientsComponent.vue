@@ -41,7 +41,7 @@
           <button
             type="button"
             class="btn btn-danger"
-            @click="deleteSelectedContacts"
+            @click="deleteSelectedImages"
           >
             {{ $t("deleteSelected") }}
           </button>
