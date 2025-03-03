@@ -2,6 +2,15 @@ import { createI18n } from "vue-i18n";
 
 const messages = {
   en: {
+    blogImage: "Blog Image",
+    searchBlogs: "Search Blogs",
+    Forms: "Forms",
+    Careers: "Careers",
+    blogs: "Blogs",
+    addBlog: "Add Blog",
+    BlogName: "Blog Name",
+    BlogDescription: "Blog Description",
+    BlogCategories: "Blog Categories",
     allPartners: "All Partners",
     allContacts: "All Contacts",
     interests: "Interests",
@@ -662,6 +671,15 @@ const messages = {
     serviceDetails: "Service Details",
   },
   ar: {
+    blogImage: "صورة المدونة",
+    searchBlogs: "بحث في المدونات",
+    Forms: "النماذج",
+    Careers: "الوظائف",
+    blogs: "المدونات",
+    addBlog: "إضافة مدونة",
+    BlogName: "اسم المدونة",
+    BlogDescription: "وصف المدونة",
+    BlogCategories: "فئات المدونة",
     allPartners: "All Partners",
     allContacts: "All Contacts",
     interests: "Interests",

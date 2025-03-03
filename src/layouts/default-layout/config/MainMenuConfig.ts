@@ -146,6 +146,27 @@ const MainMenuConfig: Array<MenuItem> = [
     ],
   },
   {
+    heading: "blogs",
+    route: "/blogs",
+    pages: [
+      {
+        sectionTitle: "blogs",
+        route: "/blogs",
+        keenthemesIcon: "abstract-27",
+        sub: [
+          {
+            heading: "blogs",
+            route: "/apps/blogs/all",
+          },
+          {
+            heading: "addBlog",
+            route: "/apps/blog/add",
+          },
+        ],
+      },
+    ],
+  },
+  {
     heading: "settings",
     route: "/settings",
     pages: [
